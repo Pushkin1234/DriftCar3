@@ -3910,6 +3910,7 @@ GameObject:
   - component: {fileID: 1143245958}
   - component: {fileID: 1143245957}
   - component: {fileID: 1143245956}
+  - component: {fileID: 1143245959}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -4019,6 +4020,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143245954}
   m_CullTransparentMesh: 1
+--- !u!114 &1143245959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1143245954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6a5a0ca48314e46adfc70d56a53eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Button: {fileID: 1143245956}
+  NameScene: Level
 --- !u!1 &1146705556
 GameObject:
   m_ObjectHideFlags: 0
@@ -4828,7 +4843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1351174970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6123,7 +6138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1835383100
 MonoBehaviour:
   m_ObjectHideFlags: 0
