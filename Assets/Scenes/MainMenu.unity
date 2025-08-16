@@ -8192,8 +8192,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0422\u0410\u041B\u0418\u0426\u0410 \u041B\u0418\u0414\u0415\u0420\u041E\u0412"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7c1b7b325a7f24346849416ca66627c0, type: 2}
-  m_sharedMaterial: {fileID: -1880268275423033644, guid: 7c1b7b325a7f24346849416ca66627c0,
+  m_fontAsset: {fileID: 11400000, guid: c7829991824e54f4baec83f84826ab5c, type: 2}
+  m_sharedMaterial: {fileID: -8542826960965048950, guid: c7829991824e54f4baec83f84826ab5c,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
