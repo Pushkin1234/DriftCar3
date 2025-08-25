@@ -822,7 +822,7 @@ PlayerSettings:
     PS5: BCG_RCC
     QNX: BCG_RCC
     Stadia: BCG_RCC
-    Standalone: BCG_RCC
+    Standalone: BCG_RCC;PLUGIN_YG_2;TMP_YG2;NJSON_YG2
     VisionOS: BCG_RCC
     WebGL: PLUGIN_YG_2;TMP_YG2;NJSON_YG2;BCG_RCC
     Windows Store Apps: BCG_RCC
