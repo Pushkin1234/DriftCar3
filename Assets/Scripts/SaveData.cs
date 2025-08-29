@@ -33,7 +33,10 @@ public class SaveData : MonoBehaviour
         Load();
     }
 
-
+    private void Start()
+    {
+        
+    }
 
     private void Update()
     {
