@@ -8,7 +8,7 @@ public class DriftScore : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _countCoinsNumberText;
     [SerializeField] private TextMeshProUGUI _countDriftScoreNumberText;
-    [SerializeField] private TextMeshProUGUI _recordCountdriftScoreNumberText;
+    [SerializeField] private TextMeshProUGUI _recordCountDriftScoreNumberText;
 
     [SerializeField] private TextMeshProUGUI _driftScoreMultiplier;
     [SerializeField] private TextMeshProUGUI _driftScoreText;
@@ -43,7 +43,10 @@ public class DriftScore : MonoBehaviour
         _driftScoreText.gameObject.SetActive(false);
         _driftScoreTitle.gameObject.SetActive(false);
 
-        _recordCountdriftScoreNumberText.text = "0";
+        _countCoinsNumberText.text = _countCoinsEarnedPerLevel.ToString();
+        _countDriftScoreNumberText.text = _countDriftScoreEarnedPerLevel.ToString();
+
+        _recordCountDriftScoreNumberText.text = SaveData.Instance.Data.RecordDriftScore.ToString();
     }
 
     private void Update()
@@ -107,10 +110,11 @@ public class DriftScore : MonoBehaviour
     }
     private void EndDrift()
     {
+        Debug.Log("Зашли в EndDrift");
         _isDrifting = false;
         _timeWithoutDrift = 0;
         Debug.Log("Drift Score: " + driftScore);
-        //SaveData.Instance.Data.Coins += Convert.ToInt32(driftScore * 0.5F);
+        SaveData.Instance.Data.Coins += Convert.ToInt32(driftScore * 0.5F);
         _countCoinsEarnedPerLevel += Convert.ToInt32(driftScore * 0.5f);
         _countDriftScoreEarnedPerLevel += Convert.ToInt32(driftScore);
 
@@ -121,17 +125,17 @@ public class DriftScore : MonoBehaviour
         _countCoinsNumberText.text = _countCoinsEarnedPerLevel.ToString();
         _countDriftScoreNumberText.text = _countDriftScoreEarnedPerLevel.ToString();
 
-        //if(driftScore > SaveData.Tnstance.Data.RecordDriftScore)
-        // {
-        //SaveData.Instance.Data.RecordDriftScore = Convert.ToInt32(driftScore);
-        //_recordCountDriftScoreNumberText.text = saveData.Instance.Data.RecordDriftScore.ToString();
-        // }
+        if(driftScore > SaveData.Instance.Data.RecordDriftScore)
+        {
+            SaveData.Instance.Data.RecordDriftScore = Convert.ToInt32(driftScore);
+            _recordCountDriftScoreNumberText.text = SaveData.Instance.Data.RecordDriftScore.ToString();
+        }
 
         currentMultiplierIndex = 0;
 
         driftScore = 0;
 
-        //SaveData.Instance.SaveYandex();
+        SaveData.Instance.SaveYandex();
     }
 
 }
