@@ -110,10 +110,8 @@ public class DriftScore : MonoBehaviour
     }
     private void EndDrift()
     {
-        Debug.Log("Зашли в EndDrift");
         _isDrifting = false;
         _timeWithoutDrift = 0;
-        Debug.Log("Drift Score: " + driftScore);
         SaveData.Instance.Data.Coins += Convert.ToInt32(driftScore * 0.5F);
         _countCoinsEarnedPerLevel += Convert.ToInt32(driftScore * 0.5f);
         _countDriftScoreEarnedPerLevel += Convert.ToInt32(driftScore);
