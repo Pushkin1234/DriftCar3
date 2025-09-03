@@ -134,5 +134,3 @@ public class DataHolder
 
     public List<bool> IsBuyShop = new List<bool>() {true, false, false, false};
 }
-
-
