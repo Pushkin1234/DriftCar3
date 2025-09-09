@@ -3477,6 +3477,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb3bf6ff2d2acd45a1738d705f7bcf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isBuy: 
+  _prices: 
+  _shopUIView: {fileID: 0}
+  _cars:
+  - {fileID: 0}
+  _loadIndex: 0
   _countCoinsText: {fileID: 978204326}
 --- !u!4 &643497003
 Transform:
