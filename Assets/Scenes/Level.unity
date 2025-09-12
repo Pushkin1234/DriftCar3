@@ -1465,6 +1465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 903150322}
+  - component: {fileID: 903150323}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1492,6 +1493,24 @@ Transform:
   - {fileID: 721637273}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &903150323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903150321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e169fc6ac7fe6b949b65ecee5ffc7ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cars:
+  - {fileID: 1649351268}
+  - {fileID: 454096082}
+  - {fileID: 1581844212}
+  - {fileID: 1443948100}
+  - {fileID: 721637274}
 --- !u!1 &930011491
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,6 +3270,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5b24270dd3a52e4180206467601e919, type: 3}
+--- !u!1 &1649351268 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8573549319431884798, guid: f5b24270dd3a52e4180206467601e919,
+    type: 3}
+  m_PrefabInstance: {fileID: 1649351267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1698847824 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8573549319431884787, guid: f5b24270dd3a52e4180206467601e919,

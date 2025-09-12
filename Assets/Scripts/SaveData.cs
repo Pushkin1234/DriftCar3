@@ -132,5 +132,5 @@ public class DataHolder
 
     public bool muteMusic = false;
 
-    public List<bool> IsBuyShop = new List<bool>() {true, false, false, false};
+    public List<bool> IsBuyShop = new List<bool>() {true, false, false, false, false};
 }

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopController : MonoBehaviour
 {
+    [SerializeField] private MainMenuView _mainMenuView;
+    
     [SerializeField] private List<bool> _isBuy;
 
     [SerializeField] private List<int> _prices;
@@ -24,6 +27,7 @@ public class ShopController : MonoBehaviour
 
     private void Start()
     {
+        _isBuy = SaveData.Instance.Data.IsBuyShop;
         _shopUIView.LeftNextCarButton.onClick.AddListener(() => ChangeCar(Direction.Left));
         _shopUIView.RightNextCarButton.onClick.AddListener(() => ChangeCar(Direction.Right));
         _shopUIView.BuyButton.onClick.AddListener(Buy);
@@ -63,15 +67,17 @@ public class ShopController : MonoBehaviour
         {
             _shopUIView.BuyButton.gameObject.SetActive(false);
             _shopUIView.PriceText.gameObject.SetActive(false);
-            //_mainMenuView.StartButton.gameObject.SetActive(true);
+            _mainMenuView.PlayButton.gameObject.SetActive(true);
         }
         else
         {
             _shopUIView.PriceText.text = _prices[_loadIndex].ToString();
             _shopUIView.PriceText.gameObject.SetActive(true);
             _shopUIView.BuyButton.gameObject.SetActive(true);
-            //_mainMenuView.StartButton.gameObject.SetActive(false);
+            _mainMenuView.PlayButton.gameObject.SetActive(false);
         }
+
+        SaveData.Instance.Data.AppliedCarIndex = _loadIndex;
     }
     public void ChangeCar(Direction direction)
     {

@@ -1,11 +1,12 @@
 {
     "DeyTime": "",
-    "Coins": 70789,
-    "RecordDriftScore": 13182,
+    "Coins": 0,
+    "RecordDriftScore": 0,
     "AppliedCarIndex": 0,
     "muteMusic": false,
     "IsBuyShop": [
         true,
+        false,
         false,
         false,
         false
