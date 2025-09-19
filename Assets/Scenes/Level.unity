@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _countCoinsNumberText: {fileID: 969218420}
   _countDriftScoreNumberText: {fileID: 1752263306}
-  _recordCountDriftScoreNumberText: {fileID: 0}
+  _recordCountDriftScoreNumberText: {fileID: 930011493}
   _driftScoreMultiplier: {fileID: 478554334}
   _driftScoreText: {fileID: 880034284}
   _driftScoreTitle: {fileID: 1491329003}
