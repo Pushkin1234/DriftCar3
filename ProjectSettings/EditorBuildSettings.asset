@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/PluginYourGames/Example/Scenes/ExampleYG2.unity
+    guid: e49bf7e58fdb4db4c9df51f0ddb8f327
+  - enabled: 1
     path: Assets/Racing Starter Kit/RSK Assets/Scenes/SampleScene.unity
     guid: adc28652a668a9646b0352d63f41b808
   - enabled: 1
@@ -14,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Pause.unity
     guid: 3fe84e203672be94aa62891fe4554090
   m_configObjects: {}

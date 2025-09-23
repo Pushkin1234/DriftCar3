@@ -1,6 +1,7 @@
 using UnityEngine;
 using YG;
 using YG.Utils;
+using YG.Insides;
 
 public class YandexModule : BaseGameModule
 {
@@ -16,10 +17,10 @@ public class YandexModule : BaseGameModule
     
     public void SaveToYandex()
     {
-        // Интеграция с Яндекс.Игры SDK
+        //Интеграция с Яндекс.Игры SDK
         if (YG2.isSDKEnabled)
         {
-            // Сохранение в облако через YG2 API
+            //Сохранение в облако через YG2 API
             YG2.SaveProgress();
         }
     }
@@ -37,7 +38,7 @@ public class YandexModule : BaseGameModule
     {
         if (YG2.isSDKEnabled)
         {
-            YG2.leaderboard.SetScore("drift_leaderboard", score);
+            //YG2.leaderboard.SetScore("drift_leaderboard", score);
         }
     }
     

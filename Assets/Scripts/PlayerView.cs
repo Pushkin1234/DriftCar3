@@ -8,7 +8,7 @@ public class PlayerView : MonoBehaviour
 
     private void Start()
     {
-        PlacingSkin(SaveData.Instance.Data.AppliedCarIndex);
+        //PlacingSkin(SaveData.Instance.Data.AppliedCarIndex);
     }
 
     private void PlacingSkin(int index)

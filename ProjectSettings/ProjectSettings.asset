@@ -812,23 +812,23 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: MOBILE_INPUT;USE_MOBILE_INPUT;BCG_RCC
+    Android: MOBILE_INPUT;USE_MOBILE_INPUT;BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
     EmbeddedLinux: BCG_RCC
     GameCoreScarlett: BCG_RCC
     GameCoreXboxOne: BCG_RCC
-    LinuxHeadlessSimulation: BCG_RCC
-    Nintendo Switch: BCG_RCC
-    PS4: BCG_RCC
-    PS5: BCG_RCC
+    LinuxHeadlessSimulation: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
+    Nintendo Switch: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
+    PS4: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
+    PS5: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
     QNX: BCG_RCC
     Stadia: BCG_RCC
-    Standalone: BCG_RCC;PLUGIN_YG_2;TMP_YG2;NJSON_YG2
+    Standalone: BCG_RCC;PLUGIN_YG_2;TMP_YG2;NJSON_YG2;YandexGamesPlatform_yg;Authorization_yg;Storage_yg
     VisionOS: BCG_RCC
-    WebGL: PLUGIN_YG_2;TMP_YG2;NJSON_YG2;BCG_RCC
-    Windows Store Apps: BCG_RCC
-    XboxOne: BCG_RCC
-    iPhone: BCG_RCC
-    tvOS: BCG_RCC
+    WebGL: PLUGIN_YG_2;TMP_YG2;NJSON_YG2;BCG_RCC;YandexGamesPlatform_yg;RU_YG2;Authorization_yg;Storage_yg
+    Windows Store Apps: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
+    XboxOne: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
+    iPhone: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
+    tvOS: BCG_RCC;PLUGIN_YG_2;YandexGamesPlatform_yg;TMP_YG2;NJSON_YG2;Authorization_yg;Storage_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
