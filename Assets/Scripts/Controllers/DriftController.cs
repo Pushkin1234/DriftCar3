@@ -12,8 +12,10 @@ public class DriftController : MonoBehaviour
     
     private DriftModule _driftModule;
     private DataModule _dataModule;
-    private int _countDriftScoreEarnedPerLevel = 0;
-    private int _countCoinsEarnedPerLevel = 0;
+    
+    // Кэширование для оптимизации UI
+    private float _lastDriftScore = 0f;
+    private float _lastCoinsEarned = 0f;
     
     private void Start()
     {
@@ -30,7 +32,11 @@ public class DriftController : MonoBehaviour
     
     private void Update()
     {
-        if (_driftModule == null) return;
+        if (_driftModule == null) 
+        {
+            Debug.LogError("DriftModule is null");
+            return;
+        }
         
         // Обновляем UI только при изменении
         if (_driftModule.IsDrifting)
@@ -44,12 +50,51 @@ public class DriftController : MonoBehaviour
             _driftScoreText.gameObject.SetActive(false);
             _driftScoreTitle.gameObject.SetActive(false);
         }
+        
+        // Оптимизированное обновление UI - только при изменении значений
+        if (ShouldUpdateUI())
+        {
+            UpdateUI();
+        }
+    }
+    
+    private bool ShouldUpdateUI()
+    {
+        float currentDriftScore = _driftModule.DriftScoreEarnedCurrentLevel;
+        float currentCoinsEarned = _driftModule.CoinsEarnedPerLevel;
+        
+        if (Mathf.Abs(currentDriftScore - _lastDriftScore) > 0.1f || 
+            Mathf.Abs(currentCoinsEarned - _lastCoinsEarned) > 0.1f)
+        {
+            _lastDriftScore = currentDriftScore;
+            _lastCoinsEarned = currentCoinsEarned;
+            return true;
+        }
+        return false;
     }
     
     private void UpdateUI()
     {
-        _countCoinsNumberText.text = _countCoinsEarnedPerLevel.ToString();
-        _countDriftScoreNumberText.text = _countDriftScoreEarnedPerLevel.ToString();
+        _countCoinsNumberText.text = _driftModule.CoinsEarnedPerLevel.ToString();
+        _countDriftScoreNumberText.text = _driftModule.DriftScoreEarnedCurrentLevel.ToString();
         _recordCountDriftScoreNumberText.text = _dataModule.Data.recordDriftScore.ToString();
+    }
+    
+    // Публичные методы для управления
+    public void ResetLevelStats()
+    {
+        if (_driftModule != null)
+        {
+            _driftModule.ResetLevelStats();
+            UpdateUI();
+        }
+    }
+    
+    public void ResetCurrentDrift()
+    {
+        if (_driftModule != null)
+        {
+            _driftModule.ResetCurrentDrift();
+        }
     }
 }

@@ -17,6 +17,13 @@ public class DriftModule : BaseGameModule
     private int _currentMultiplierIndex = 0;
     private bool _isActivateMultiplier = false;
     private float _timeWithoutDrift = 0;
+
+
+    private float _driftScoreEarnedCurrentLevel = 0f;
+    public float DriftScoreEarnedCurrentLevel => _driftScoreEarnedCurrentLevel;
+
+    private float _coinsEarnedPerLevel = 0f;
+    public float CoinsEarnedPerLevel => _coinsEarnedPerLevel;
     
     // Компоненты
     private RCC_CarControllerV3 _carController;
@@ -25,16 +32,35 @@ public class DriftModule : BaseGameModule
     public float CurrentDriftScore => _driftScore;
     public bool IsDrifting => _isDrifting;
     
+    // Методы для управления счетчиками уровня
+    public void ResetLevelStats()
+    {
+        _driftScoreEarnedCurrentLevel = 0f;
+        _coinsEarnedPerLevel = 0f;
+    }
+    
+    public void ResetCurrentDrift()
+    {
+        _driftScore = 0f;
+        _isDrifting = false;
+        _currentMultiplierIndex = 0;
+        _isActivateMultiplier = false;
+        _timeWithoutDrift = 0f;
+    }
+    
     public override void Initialize()
     {
-        _carController = FindObjectOfType<RCC_CarControllerV3>();
         _dataModule = ModuleManager.Instance.GetModule<DataModule>();
         base.Initialize();
     }
     
     public override void Update()
     {
-        if (_carController == null) return;
+        if (_carController == null) 
+        {
+            _carController = FindObjectOfType<RCC_CarControllerV3>();
+            return;
+        }
         
         float driftAngle = Vector3.Angle(_carController.transform.forward, _carController.Rigid.velocity);
         
@@ -53,6 +79,7 @@ public class DriftModule : BaseGameModule
             
             if (_isDrifting && _timeWithoutDrift > timeToEndDrift)
             {
+                Debug.Log("EndDrift");
                 EndDrift();
             }
         }
@@ -94,6 +121,8 @@ public class DriftModule : BaseGameModule
         
         // Обновляем данные
         int coinsEarned = Mathf.RoundToInt(_driftScore * 0.5f);
+        _driftScoreEarnedCurrentLevel += _driftScore;
+        _coinsEarnedPerLevel += coinsEarned;
         _dataModule.Data.coins += coinsEarned;
         _dataModule.Data.recordDriftScore = Mathf.Max(_dataModule.Data.recordDriftScore, Mathf.RoundToInt(_driftScore));
         

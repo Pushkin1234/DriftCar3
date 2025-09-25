@@ -4,8 +4,20 @@ public class GameController : MonoBehaviour
 {
     private void Awake()
     {
-        // Инициализация модулей
+        // Сначала создаем ModuleManager если его нет
+        EnsureModuleManagerExists();
+        
+        // Затем инициализируем модули
         InitializeModules();
+    }
+    
+    private void EnsureModuleManagerExists()
+    {
+        if (ModuleManager.Instance == null)
+        {
+            // Создаем ModuleManager на этом же объекте
+            gameObject.AddComponent<ModuleManager>();
+        }
     }
     
     private void InitializeModules()

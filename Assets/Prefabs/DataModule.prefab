@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8323724550779661144}
-  - component: {fileID: 427400522489188665}
+  - component: {fileID: 7871409094926609063}
   m_Layer: 0
-  m_Name: SaveData
+  m_Name: DataModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &427400522489188665
+--- !u!114 &7871409094926609063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,13 +41,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4674881734280551349}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18704ce8442db3a45ada81478da81bdf, type: 3}
+  m_Script: {fileID: 11500000, guid: 8aec5f7867b9cd74c916da6eaf633edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data:
-    DeyTime: 
-    Coins: 0
-    RecordDriftScore: 0
-    AppliedCarIndex: 0
-    muteMusic: 0
-    IsBuyShop: 01000000
