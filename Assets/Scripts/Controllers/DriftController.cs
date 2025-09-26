@@ -14,8 +14,9 @@ public class DriftController : MonoBehaviour
     private DataModule _dataModule;
     
     // Кэширование для оптимизации UI
-    private float _lastDriftScore = 0f;
+    private int _lastDriftScore = 0;
     private float _lastCoinsEarned = 0f;
+    private int _lastMultiplierIndex = 0;
     
     private void Start()
     {
@@ -23,9 +24,12 @@ public class DriftController : MonoBehaviour
         _dataModule = ModuleManager.Instance.GetModule<DataModule>();
         
         // Инициализация UI
-        _driftScoreMultiplier.gameObject.SetActive(false);
+        _driftScoreMultiplier.gameObject.SetActive(true); // Множитель видим с начала
         _driftScoreText.gameObject.SetActive(false);
         _driftScoreTitle.gameObject.SetActive(false);
+        
+        // Устанавливаем начальное значение множителя
+        _driftScoreMultiplier.text = "x1";
         
         UpdateUI();
     }
@@ -51,6 +55,9 @@ public class DriftController : MonoBehaviour
             _driftScoreTitle.gameObject.SetActive(false);
         }
         
+        // Обновляем множитель
+        UpdateMultiplier();
+        
         // Оптимизированное обновление UI - только при изменении значений
         if (ShouldUpdateUI())
         {
@@ -60,10 +67,10 @@ public class DriftController : MonoBehaviour
     
     private bool ShouldUpdateUI()
     {
-        float currentDriftScore = _driftModule.DriftScoreEarnedCurrentLevel;
+        int currentDriftScore = _driftModule.DriftScoreEarnedCurrentLevel;
         float currentCoinsEarned = _driftModule.CoinsEarnedPerLevel;
         
-        if (Mathf.Abs(currentDriftScore - _lastDriftScore) > 0.1f || 
+        if (currentDriftScore != _lastDriftScore || 
             Mathf.Abs(currentCoinsEarned - _lastCoinsEarned) > 0.1f)
         {
             _lastDriftScore = currentDriftScore;
@@ -71,6 +78,16 @@ public class DriftController : MonoBehaviour
             return true;
         }
         return false;
+    }
+    
+    private void UpdateMultiplier()
+    {
+        int currentMultiplierIndex = _driftModule.CurrentMultiplierIndex;
+        if (currentMultiplierIndex != _lastMultiplierIndex)
+        {
+            _lastMultiplierIndex = currentMultiplierIndex;
+            _driftScoreMultiplier.text = "x" + (currentMultiplierIndex + 1).ToString();
+        }
     }
     
     private void UpdateUI()
@@ -95,6 +112,8 @@ public class DriftController : MonoBehaviour
         if (_driftModule != null)
         {
             _driftModule.ResetCurrentDrift();
+            _lastMultiplierIndex = 0;
+            _driftScoreMultiplier.text = "x1";
         }
     }
 }

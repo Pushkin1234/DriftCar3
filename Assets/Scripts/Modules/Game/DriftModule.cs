@@ -19,8 +19,8 @@ public class DriftModule : BaseGameModule
     private float _timeWithoutDrift = 0;
 
 
-    private float _driftScoreEarnedCurrentLevel = 0f;
-    public float DriftScoreEarnedCurrentLevel => _driftScoreEarnedCurrentLevel;
+    private int _driftScoreEarnedCurrentLevel = 0;
+    public int DriftScoreEarnedCurrentLevel => _driftScoreEarnedCurrentLevel;
 
     private float _coinsEarnedPerLevel = 0f;
     public float CoinsEarnedPerLevel => _coinsEarnedPerLevel;
@@ -31,11 +31,12 @@ public class DriftModule : BaseGameModule
     
     public float CurrentDriftScore => _driftScore;
     public bool IsDrifting => _isDrifting;
+    public int CurrentMultiplierIndex => _currentMultiplierIndex;
     
     // Методы для управления счетчиками уровня
     public void ResetLevelStats()
     {
-        _driftScoreEarnedCurrentLevel = 0f;
+        _driftScoreEarnedCurrentLevel = 0;
         _coinsEarnedPerLevel = 0f;
     }
     
@@ -121,7 +122,7 @@ public class DriftModule : BaseGameModule
         
         // Обновляем данные
         int coinsEarned = Mathf.RoundToInt(_driftScore * 0.5f);
-        _driftScoreEarnedCurrentLevel += _driftScore;
+        _driftScoreEarnedCurrentLevel += Mathf.RoundToInt(_driftScore);
         _coinsEarnedPerLevel += coinsEarned;
         _dataModule.Data.coins += coinsEarned;
         _dataModule.Data.recordDriftScore = Mathf.Max(_dataModule.Data.recordDriftScore, Mathf.RoundToInt(_driftScore));
