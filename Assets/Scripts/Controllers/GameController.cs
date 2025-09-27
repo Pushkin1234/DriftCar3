@@ -2,12 +2,21 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [Header("Scene Configuration")]
+    [SerializeField] private bool needsDriftModule = true;
+    [SerializeField] private bool needsShopModule = false;
+    [SerializeField] private bool needsObjectPoolModule = true;
+    [SerializeField] private bool needsUIModule = false;
+    
     private void Awake()
     {
         // Сначала создаем ModuleManager если его нет
         EnsureModuleManagerExists();
         
-        // Затем инициализируем модули
+        // Очищаем локальные модули от предыдущей сцены
+        CleanupLocalModules();
+        
+        // Инициализируем модули для этой сцены
         InitializeModules();
     }
     
@@ -15,40 +24,108 @@ public class GameController : MonoBehaviour
     {
         if (ModuleManager.Instance == null)
         {
-            // Создаем ModuleManager на этом же объекте
-            gameObject.AddComponent<ModuleManager>();
+            // Создаем ModuleManager на отдельном объекте
+            GameObject moduleManagerGO = new GameObject("ModuleManager");
+            moduleManagerGO.AddComponent<ModuleManager>();
         }
+    }
+    
+    private void CleanupLocalModules()
+    {
+        // Удаляем локальные модули, которые должны пересоздаваться
+        ModuleManager.Instance.CleanupLocalModules();
     }
     
     private void InitializeModules()
     {
-        // Создаем универсальные модули
-        var objectPoolModule = gameObject.AddComponent<ObjectPoolModule>();
-        var cacheModule = gameObject.AddComponent<CacheModule>();
-        var webglModule = gameObject.AddComponent<WebGLModule>();
+        // Инициализируем глобальные модули (создаются только один раз)
+        InitializeGlobalModules();
         
-        // Создаем игровые модули
-        var dataModule = gameObject.AddComponent<DataModule>();
-        var driftModule = gameObject.AddComponent<DriftModule>();
-        var shopModule = gameObject.AddComponent<ShopModule>();
-        var yandexModule = gameObject.AddComponent<YandexModule>();
+        // Создаем локальные модули для этой сцены
+        InitializeLocalModules();
+    }
+    
+    private void InitializeGlobalModules()
+    {
+        // DataModule - глобальный (сохраняет прогресс игрока)
+        if (!ModuleManager.Instance.HasModule<DataModule>())
+        {
+            var dataModule = ModuleManager.Instance.gameObject.AddComponent<DataModule>();
+            ModuleManager.Instance.RegisterModule(dataModule);
+            dataModule.Initialize();
+            Debug.Log("Created DataModule (Global)");
+        }
         
-        // Регистрируем модули
-        ModuleManager.Instance.RegisterModule(objectPoolModule);
-        ModuleManager.Instance.RegisterModule(cacheModule);
-        ModuleManager.Instance.RegisterModule(webglModule);
-        ModuleManager.Instance.RegisterModule(dataModule);
-        ModuleManager.Instance.RegisterModule(driftModule);
-        ModuleManager.Instance.RegisterModule(shopModule);
-        ModuleManager.Instance.RegisterModule(yandexModule);
+        // YandexModule - глобальный (сессия пользователя)
+        if (!ModuleManager.Instance.HasModule<YandexModule>())
+        {
+            var yandexModule = ModuleManager.Instance.gameObject.AddComponent<YandexModule>();
+            ModuleManager.Instance.RegisterModule(yandexModule);
+            yandexModule.Initialize();
+            Debug.Log("Created YandexModule (Global)");
+        }
         
-        // Инициализируем модули
-        objectPoolModule.Initialize();
-        cacheModule.Initialize();
-        webglModule.Initialize();
-        dataModule.Initialize();
-        driftModule.Initialize();
-        shopModule.Initialize();
-        yandexModule.Initialize();
+        // CacheModule - глобальный (кэш данных)
+        if (!ModuleManager.Instance.HasModule<CacheModule>())
+        {
+            var cacheModule = ModuleManager.Instance.gameObject.AddComponent<CacheModule>();
+            ModuleManager.Instance.RegisterModule(cacheModule);
+            cacheModule.Initialize();
+            Debug.Log("Created CacheModule (Global)");
+        }
+        
+        // WebGLModule - глобальный (настройки платформы)
+        if (!ModuleManager.Instance.HasModule<WebGLModule>())
+        {
+            var webglModule = ModuleManager.Instance.gameObject.AddComponent<WebGLModule>();
+            ModuleManager.Instance.RegisterModule(webglModule);
+            webglModule.Initialize();
+            Debug.Log("Created WebGLModule (Global)");
+        }
+    }
+    
+    private void InitializeLocalModules()
+    {
+        // DriftModule - локальный (состояние дрифта текущего уровня)
+        if (needsDriftModule)
+        {
+            var driftModule = gameObject.AddComponent<DriftModule>();
+            ModuleManager.Instance.RegisterModule(driftModule);
+            driftModule.Initialize();
+            Debug.Log("Created DriftModule (Local)");
+        }
+        
+        // ShopModule - локальный (состояние UI магазина)
+        if (needsShopModule)
+        {
+            var shopModule = gameObject.AddComponent<ShopModule>();
+            ModuleManager.Instance.RegisterModule(shopModule);
+            shopModule.Initialize();
+            Debug.Log("Created ShopModule (Local)");
+        }
+        
+        // ObjectPoolModule - локальный (пул объектов уровня)
+        if (needsObjectPoolModule)
+        {
+            var objectPoolModule = gameObject.AddComponent<ObjectPoolModule>();
+            ModuleManager.Instance.RegisterModule(objectPoolModule);
+            objectPoolModule.Initialize();
+            Debug.Log("Created ObjectPoolModule (Local)");
+        }
+        
+        // UIModule - локальный (если нужен)
+        if (needsUIModule)
+        {
+            var uiModule = gameObject.AddComponent<UIModule>();
+            ModuleManager.Instance.RegisterModule(uiModule);
+            uiModule.Initialize();
+            Debug.Log("Created UIModule (Local)");
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        // Дополнительная очистка при уничтожении GameController
+        Debug.Log($"GameController destroyed in scene: {gameObject.scene.name}");
     }
 }

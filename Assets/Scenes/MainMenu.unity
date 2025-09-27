@@ -6345,6 +6345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86674e0f4dc91a34a83e03e253bb47ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  needsDriftModule: 0
+  needsShopModule: 1
+  needsObjectPoolModule: 1
+  needsUIModule: 1
 --- !u!4 &1134074156
 Transform:
   m_ObjectHideFlags: 0

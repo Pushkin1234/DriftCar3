@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WebGLModule : BaseGameModule
+public class WebGLModule : BaseGameModule, IPersistentModule
 {
     public override string ModuleName => "WebGL";
     

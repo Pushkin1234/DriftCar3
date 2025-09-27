@@ -3,7 +3,7 @@ using YG;
 using YG.Utils;
 using YG.Insides;
 
-public class YandexModule : BaseGameModule
+public class YandexModule : BaseGameModule, IPersistentModule
 {
     public override string ModuleName => "Yandex";
     

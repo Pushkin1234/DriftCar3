@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataModule : BaseGameModule
+public class DataModule : BaseGameModule, IPersistentModule
 {
     public override string ModuleName => "Data";
     

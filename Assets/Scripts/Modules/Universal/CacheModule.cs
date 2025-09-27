@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CacheModule : BaseGameModule
+public class CacheModule : BaseGameModule, IPersistentModule
 {
     public override string ModuleName => "Cache";
     
