@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool needsShopModule = false;
     [SerializeField] private bool needsObjectPoolModule = true;
     [SerializeField] private bool needsUIModule = false;
+    [SerializeField] private bool needsCustomizationModule = false;
     
     private void Awake()
     {
@@ -81,6 +82,15 @@ public class GameController : MonoBehaviour
             ModuleManager.Instance.RegisterModule(webglModule);
             webglModule.Initialize();
             Debug.Log("Created WebGLModule (Global)");
+        }
+        
+        // CustomizationModule - глобальный (настройки кастомизации машин)
+        if (needsCustomizationModule && !ModuleManager.Instance.HasModule<CustomizationModule>())
+        {
+            var customizationModule = ModuleManager.Instance.gameObject.AddComponent<CustomizationModule>();
+            ModuleManager.Instance.RegisterModule(customizationModule);
+            customizationModule.Initialize();
+            Debug.Log("Created CustomizationModule (Global)");
         }
     }
     

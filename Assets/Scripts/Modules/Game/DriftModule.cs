@@ -63,9 +63,17 @@ public class DriftModule : BaseGameModule
             return;
         }
         
+        // Проверяем направление движения
+        float forwardSpeed = Vector3.Dot(_carController.Rigid.velocity, _carController.transform.forward);
+        
+        // Вычисляем угол дрифта
         float driftAngle = Vector3.Angle(_carController.transform.forward, _carController.Rigid.velocity);
         
-        if (driftAngle > driftThreshold && _carController.speed > requiredSpeed)
+        // Условие дрифта: движение вперед (не назад) + достаточная общая скорость + боковое скольжение
+        bool isMovingForward = forwardSpeed > -2f; // Разрешаем небольшое движение назад при дрифте
+        bool hasEnoughSpeed = _carController.speed > requiredSpeed; // Используем общую скорость
+        
+        if (isMovingForward && driftAngle > driftThreshold && hasEnoughSpeed)
         {
             if (!_isDrifting)
             {
