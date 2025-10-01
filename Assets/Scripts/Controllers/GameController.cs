@@ -92,6 +92,15 @@ public class GameController : MonoBehaviour
             customizationModule.Initialize();
             Debug.Log("Created CustomizationModule (Global)");
         }
+        
+        // UpgradeModule - глобальный (прокачка характеристик машин)
+        if (!ModuleManager.Instance.HasModule<UpgradeModule>())
+        {
+            var upgradeModule = ModuleManager.Instance.gameObject.AddComponent<UpgradeModule>();
+            ModuleManager.Instance.RegisterModule(upgradeModule);
+            upgradeModule.Initialize();
+            Debug.Log("Created UpgradeModule (Global)");
+        }
     }
     
     private void InitializeLocalModules()

@@ -52,10 +52,10 @@ public class CustomizationView : MonoBehaviour
     /// <summary>
     /// Обновляет отображение колес
     /// </summary>
-    public void UpdateWheelDisplay(string wheelName, Sprite wheelSprite)
+    public void UpdateWheelDisplay(string wheelInfo, Sprite wheelSprite)
     {
         if (_wheelNameText != null)
-            _wheelNameText.text = wheelName;
+            _wheelNameText.text = wheelInfo;
             
         if (_wheelPreviewImage != null && wheelSprite != null)
             _wheelPreviewImage.sprite = wheelSprite;

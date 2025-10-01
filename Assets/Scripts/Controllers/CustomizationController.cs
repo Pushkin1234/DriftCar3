@@ -4,12 +4,8 @@ using TMPro;
 
 public class CustomizationController : MonoBehaviour
 {
-    [Header("UI Elements")]
-    [SerializeField] private Button[] _colorButtons;
-    [SerializeField] private Button _previousWheelButton;
-    [SerializeField] private Button _nextWheelButton;
-    [SerializeField] private TextMeshProUGUI _wheelIndexText;
-    [SerializeField] private Button _resetCustomizationButton;
+    [Header("View Reference")]
+    [SerializeField] private CustomizationView _view;
     
     [Header("Configuration")]
     [SerializeField] private string _targetCarModelName = "SportsCar"; // Название модели машины
@@ -18,7 +14,6 @@ public class CustomizationController : MonoBehaviour
     private CustomizationModule _customizationModule;
     private DataModule _dataModule;
     private int _currentWheelIndex = 0;
-    private int _maxWheelIndex = 5; // Максимальное количество типов колес
     
     private void Start()
     {
@@ -31,33 +26,43 @@ public class CustomizationController : MonoBehaviour
     
     private void InitializeUI()
     {
-        // Настраиваем кнопки цветов
-        for (int i = 0; i < _colorButtons.Length && i < _availableColors.Length; i++)
+        if (_view == null)
+        {
+            Debug.LogError("CustomizationView is not assigned!");
+            return;
+        }
+        
+        // Настраиваем кнопки цветов через View
+        for (int i = 0; i < _view.ColorButtons.Length && i < _availableColors.Length; i++)
         {
             int colorIndex = i; // Захватываем индекс для замыкания
             Color targetColor = _availableColors[i];
             
             // Устанавливаем цвет кнопки
-            var buttonImage = _colorButtons[i].GetComponent<Image>();
+            var buttonImage = _view.ColorButtons[i].GetComponent<Image>();
             if (buttonImage != null)
             {
                 buttonImage.color = targetColor;
             }
             
             // Добавляем обработчик клика
-            _colorButtons[i].onClick.AddListener(() => OnColorButtonClicked(targetColor));
+            _view.ColorButtons[i].onClick.AddListener(() => OnColorButtonClicked(targetColor));
         }
         
-        // Настраиваем кнопки колес
-        if (_previousWheelButton != null)
-            _previousWheelButton.onClick.AddListener(OnPreviousWheelClicked);
+        // Настраиваем кнопки колес через View
+        if (_view.PreviousWheelButton != null)
+            _view.PreviousWheelButton.onClick.AddListener(OnPreviousWheelClicked);
             
-        if (_nextWheelButton != null)
-            _nextWheelButton.onClick.AddListener(OnNextWheelClicked);
+        if (_view.NextWheelButton != null)
+            _view.NextWheelButton.onClick.AddListener(OnNextWheelClicked);
             
-        // Кнопка сброса
-        if (_resetCustomizationButton != null)
-            _resetCustomizationButton.onClick.AddListener(OnResetCustomizationClicked);
+        // Кнопка сброса через View
+        if (_view.ResetButton != null)
+            _view.ResetButton.onClick.AddListener(OnResetCustomizationClicked);
+            
+        // Кнопка закрытия через View
+        if (_view.CloseButton != null)
+            _view.CloseButton.onClick.AddListener(OnCloseClicked);
     }
     
     private void LoadCurrentCustomization()
@@ -82,17 +87,21 @@ public class CustomizationController : MonoBehaviour
     
     private void OnPreviousWheelClicked()
     {
+        if (_customizationModule == null) return;
+        
         _currentWheelIndex--;
         if (_currentWheelIndex < 0)
-            _currentWheelIndex = _maxWheelIndex;
+            _currentWheelIndex = _customizationModule.GetWheelCount() - 1;
             
         ApplyWheelChange();
     }
     
     private void OnNextWheelClicked()
     {
+        if (_customizationModule == null) return;
+        
         _currentWheelIndex++;
-        if (_currentWheelIndex > _maxWheelIndex)
+        if (_currentWheelIndex >= _customizationModule.GetWheelCount())
             _currentWheelIndex = 0;
             
         ApplyWheelChange();
@@ -110,9 +119,20 @@ public class CustomizationController : MonoBehaviour
     
     private void UpdateWheelUI()
     {
-        if (_wheelIndexText != null)
+        if (_customizationModule == null || _view == null) return;
+        
+        var wheelData = _customizationModule.GetWheelData(_currentWheelIndex);
+        if (wheelData != null)
         {
-            _wheelIndexText.text = $"Wheels: {_currentWheelIndex + 1}/{_maxWheelIndex + 1}";
+            string wheelName = wheelData.wheelName;
+            bool isUnlocked = wheelData.isUnlocked;
+            int totalWheels = _customizationModule.GetWheelCount();
+            
+            string status = isUnlocked ? "✓" : $"🔒 {wheelData.price}💰";
+            string displayText = $"{wheelName} ({_currentWheelIndex + 1}/{totalWheels}) {status}";
+            
+            // Обновляем UI через View
+            _view.UpdateWheelDisplay(displayText, wheelData.wheelIcon);
         }
     }
     
@@ -130,6 +150,17 @@ public class CustomizationController : MonoBehaviour
         Debug.Log($"Car {_targetCarModelName} customization reset to default");
     }
     
+    private void OnCloseClicked()
+    {
+        // Закрываем панель кастомизации
+        if (_view != null)
+        {
+            _view.SetVisible(false);
+        }
+        
+        Debug.Log("Customization panel closed");
+    }
+    
     /// <summary>
     /// Устанавливает целевую модель машины для кастомизации
     /// </summary>
@@ -137,6 +168,18 @@ public class CustomizationController : MonoBehaviour
     {
         _targetCarModelName = carModelName;
         LoadCurrentCustomization();
+    }
+    
+    /// <summary>
+    /// Показывает панель кастомизации
+    /// </summary>
+    public void ShowCustomizationPanel()
+    {
+        if (_view != null)
+        {
+            _view.SetVisible(true);
+            LoadCurrentCustomization();
+        }
     }
     
     /// <summary>
