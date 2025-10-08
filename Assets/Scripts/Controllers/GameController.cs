@@ -131,15 +131,6 @@ public class GameController : MonoBehaviour
             objectPoolModule.Initialize();
             Debug.Log("Created ObjectPoolModule (Local)");
         }
-        
-        // UIModule - локальный (если нужен)
-        if (needsUIModule)
-        {
-            var uiModule = gameObject.AddComponent<UIModule>();
-            ModuleManager.Instance.RegisterModule(uiModule);
-            uiModule.Initialize();
-            Debug.Log("Created UIModule (Local)");
-        }
     }
     
     private void OnDestroy()

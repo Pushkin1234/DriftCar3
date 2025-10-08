@@ -12,6 +12,20 @@ public class CustomizationModule : BaseGameModule, IPersistentModule
         public int selectedWheelIndex = 0;
         public int selectedSpoilerIndex = -1;
         public string carModelName = "";
+        public bool[] unlockedColors = new bool[8]; // Массив разблокированных цветов
+        
+        // Улучшения характеристик
+        public int engineLevel = 0;
+        public int brakeLevel = 0;
+        public int nitroLevel = 0;
+        public int handlingLevel = 0;
+        
+        // Разблокированные улучшения
+        public bool[] unlockedEngineLevels = new bool[5]; // 5 уровней двигателя
+        public bool[] unlockedBrakeLevels = new bool[5]; // 5 уровней тормозов
+        public bool[] unlockedNitroLevels = new bool[5]; // 5 уровней нитро
+        public bool[] unlockedHandlingLevels = new bool[5]; // 5 уровней управления
+        public bool[] unlockedSpoilers = new bool[10]; // 10 спойлеров
     }
     
     [System.Serializable]
@@ -26,24 +40,110 @@ public class CustomizationModule : BaseGameModule, IPersistentModule
     
     private DataModule _dataModule;
     private Dictionary<string, CarCustomization> _carCustomizations = new Dictionary<string, CarCustomization>();
+    private Dictionary<int, CarCustomization> _carCustomizationsByIndex = new Dictionary<int, CarCustomization>(); // Кастомизация по индексу машины
+    
+    [System.Serializable]
+    public class ColorData
+    {
+        public Color color = Color.white;
+        public string colorName = "";
+        public int price = 0;
+        public bool isUnlocked = false;
+    }
+    
+    [System.Serializable]
+    public class UpgradeData
+    {
+        public string upgradeName = "";
+        public int level = 0;
+        public int price = 0;
+        public float powerMultiplier = 1.0f; // Множитель мощности
+        public string description = "";
+        public bool isUnlocked = false;
+    }
+    
+    [System.Serializable]
+    public class SpoilerData
+    {
+        public string spoilerName = "";
+        public GameObject spoilerPrefab;
+        public Sprite spoilerIcon;
+        public int price = 0;
+        public float downforceBonus = 0f; // Бонус к прижимной силе
+        public bool isUnlocked = false;
+    }
     
     // Доступные цвета для кастомизации
-    public Color[] availableColors = {
-        Color.white, Color.black, Color.red, Color.blue, 
-        Color.green, Color.yellow, Color.cyan, Color.magenta
+    public ColorData[] availableColors = {
+        new ColorData { color = Color.white, colorName = "Белый", price = 0, isUnlocked = true },
+        new ColorData { color = Color.black, colorName = "Черный", price = 500, isUnlocked = false },
+        new ColorData { color = Color.red, colorName = "Красный", price = 300, isUnlocked = false },
+        new ColorData { color = Color.blue, colorName = "Синий", price = 400, isUnlocked = false },
+        new ColorData { color = Color.green, colorName = "Зеленый", price = 350, isUnlocked = false },
+        new ColorData { color = Color.yellow, colorName = "Желтый", price = 600, isUnlocked = false },
+        new ColorData { color = Color.cyan, colorName = "Голубой", price = 450, isUnlocked = false },
+        new ColorData { color = Color.magenta, colorName = "Фиолетовый", price = 700, isUnlocked = false }
     };
     
     // Доступные колеса для кастомизации
     public WheelData[] availableWheels = new WheelData[0];
     
+    // Доступные улучшения двигателя
+    public UpgradeData[] engineUpgrades = {
+        new UpgradeData { upgradeName = "Стандартный", level = 0, price = 0, powerMultiplier = 1.0f, description = "Базовый двигатель", isUnlocked = true },
+        new UpgradeData { upgradeName = "Улучшенный", level = 1, price = 1000, powerMultiplier = 1.2f, description = "+20% мощности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Спортивный", level = 2, price = 2500, powerMultiplier = 1.5f, description = "+50% мощности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Турбо", level = 3, price = 5000, powerMultiplier = 1.8f, description = "+80% мощности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Максимальный", level = 4, price = 10000, powerMultiplier = 2.2f, description = "+120% мощности", isUnlocked = false }
+    };
+    
+    // Доступные улучшения тормозов
+    public UpgradeData[] brakeUpgrades = {
+        new UpgradeData { upgradeName = "Стандартные", level = 0, price = 0, powerMultiplier = 1.0f, description = "Базовые тормоза", isUnlocked = true },
+        new UpgradeData { upgradeName = "Улучшенные", level = 1, price = 800, powerMultiplier = 1.3f, description = "+30% эффективности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Спортивные", level = 2, price = 2000, powerMultiplier = 1.6f, description = "+60% эффективности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Керамические", level = 3, price = 4000, powerMultiplier = 2.0f, description = "+100% эффективности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Карбоновые", level = 4, price = 8000, powerMultiplier = 2.5f, description = "+150% эффективности", isUnlocked = false }
+    };
+    
+    // Доступные улучшения нитро
+    public UpgradeData[] nitroUpgrades = {
+        new UpgradeData { upgradeName = "Стандартный", level = 0, price = 0, powerMultiplier = 1.0f, description = "Базовый нитро", isUnlocked = true },
+        new UpgradeData { upgradeName = "Улучшенный", level = 1, price = 1200, powerMultiplier = 1.4f, description = "+40% мощности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Спортивный", level = 2, price = 3000, powerMultiplier = 1.8f, description = "+80% мощности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Турбо", level = 3, price = 6000, powerMultiplier = 2.3f, description = "+130% мощности", isUnlocked = false },
+        new UpgradeData { upgradeName = "Максимальный", level = 4, price = 12000, powerMultiplier = 2.8f, description = "+180% мощности", isUnlocked = false }
+    };
+    
+    // Доступные спойлеры
+    public SpoilerData[] availableSpoilers = {
+        new SpoilerData { spoilerName = "Без спойлера", price = 0, downforceBonus = 0f, isUnlocked = true },
+        new SpoilerData { spoilerName = "Спортивный", price = 1500, downforceBonus = 0.1f, isUnlocked = false },
+        new SpoilerData { spoilerName = "GT", price = 3000, downforceBonus = 0.2f, isUnlocked = false },
+        new SpoilerData { spoilerName = "Racing", price = 5000, downforceBonus = 0.3f, isUnlocked = false },
+        new SpoilerData { spoilerName = "Carbon", price = 8000, downforceBonus = 0.4f, isUnlocked = false },
+        new SpoilerData { spoilerName = "Wing", price = 12000, downforceBonus = 0.5f, isUnlocked = false }
+    };
+    
     // События для уведомления других систем
     public System.Action<string, Color> OnCarPainted;
     public System.Action<string, int> OnWheelsChanged;
+    public System.Action<string, int, Color> OnColorSelected; // carModelName, colorIndex, color
+    public System.Action<string, int> OnColorPurchased; // carModelName, colorIndex
+    public System.Action<string, int> OnColorUnlocked; // carModelName, colorIndex
+    
+    // События для улучшений
+    public System.Action<string, int> OnEngineUpgraded; // carModelName, level
+    public System.Action<string, int> OnBrakeUpgraded; // carModelName, level
+    public System.Action<string, int> OnNitroUpgraded; // carModelName, level
+    public System.Action<string, int> OnHandlingUpgraded; // carModelName, level
+    public System.Action<string, int> OnSpoilerChanged; // carModelName, spoilerIndex
     
     public override void Initialize()
     {
         _dataModule = ModuleManager.Instance.GetModule<DataModule>();
         LoadCustomizations();
+        LoadAllCarCustomizations(); // Загружаем кастомизацию для всех 5 машин
         base.Initialize();
     }
     
@@ -419,4 +519,637 @@ public class CustomizationModule : BaseGameModule, IPersistentModule
     {
         return availableWheels.Length;
     }
+    
+    #region Color Management Methods
+    
+    /// <summary>
+    /// Выбирает цвет для машины (предварительный просмотр)
+    /// </summary>
+    public void SelectColor(string carModelName, int colorIndex)
+    {
+        if (colorIndex < 0 || colorIndex >= availableColors.Length)
+        {
+            Debug.LogError($"Invalid color index: {colorIndex}");
+            return;
+        }
+        
+        var colorData = availableColors[colorIndex];
+        
+        // Применяем цвет к машине для предварительного просмотра
+        PaintCar(carModelName, colorData.color);
+        
+        // Уведомляем о выборе цвета
+        OnColorSelected?.Invoke(carModelName, colorIndex, colorData.color);
+        
+        Debug.Log($"Color {colorData.colorName} selected for {carModelName}");
+    }
+    
+    /// <summary>
+    /// Покупает цвет для машины
+    /// </summary>
+    public bool PurchaseColor(string carModelName, int colorIndex)
+    {
+        if (colorIndex < 0 || colorIndex >= availableColors.Length)
+        {
+            Debug.LogError($"Invalid color index: {colorIndex}");
+            return false;
+        }
+        
+        var colorData = availableColors[colorIndex];
+        
+        // Проверяем достаточно ли монет
+        if (_dataModule != null && _dataModule.Data.coins >= colorData.price)
+        {
+            _dataModule.Data.coins -= colorData.price;
+            colorData.isUnlocked = true;
+            
+            // Сохраняем разблокированный цвет для конкретной машины
+            if (!_carCustomizations.ContainsKey(carModelName))
+            {
+                _carCustomizations[carModelName] = new CarCustomization();
+                _carCustomizations[carModelName].carModelName = carModelName;
+            }
+            
+            // Инициализируем массив если нужно
+            if (_carCustomizations[carModelName].unlockedColors == null)
+            {
+                _carCustomizations[carModelName].unlockedColors = new bool[availableColors.Length];
+            }
+            
+            _carCustomizations[carModelName].unlockedColors[colorIndex] = true;
+            
+            SaveCustomizations();
+            _dataModule.SaveData();
+            
+            // Уведомляем о покупке
+            OnColorPurchased?.Invoke(carModelName, colorIndex);
+            
+            Debug.Log($"Color {colorData.colorName} purchased for {colorData.price} coins!");
+            return true;
+        }
+        
+        Debug.LogWarning($"Not enough coins to purchase {colorData.colorName}. Required: {colorData.price}, Available: {_dataModule?.Data.coins ?? 0}");
+        return false;
+    }
+    
+    /// <summary>
+    /// Проверяет разблокирован ли цвет для конкретной машины
+    /// </summary>
+    public bool IsColorUnlocked(string carModelName, int colorIndex)
+    {
+        if (colorIndex < 0 || colorIndex >= availableColors.Length)
+            return false;
+            
+        // Базовые цвета разблокированы по умолчанию
+        if (availableColors[colorIndex].isUnlocked)
+            return true;
+            
+        // Проверяем разблокировку для конкретной машины
+        if (_carCustomizations.ContainsKey(carModelName))
+        {
+            var customization = _carCustomizations[carModelName];
+            if (customization.unlockedColors != null && colorIndex < customization.unlockedColors.Length)
+            {
+                return customization.unlockedColors[colorIndex];
+            }
+        }
+        
+        return false;
+    }
+    
+    /// <summary>
+    /// Получает данные о цвете по индексу
+    /// </summary>
+    public ColorData GetColorData(int colorIndex)
+    {
+        if (colorIndex < 0 || colorIndex >= availableColors.Length)
+            return null;
+        return availableColors[colorIndex];
+    }
+    
+    /// <summary>
+    /// Получает количество доступных цветов
+    /// </summary>
+    public int GetColorCount()
+    {
+        return availableColors.Length;
+    }
+    
+    /// <summary>
+    /// Разблокирует цвет для конкретной машины (для тестирования или наград)
+    /// </summary>
+    public void UnlockColor(string carModelName, int colorIndex)
+    {
+        if (colorIndex < 0 || colorIndex >= availableColors.Length)
+            return;
+            
+        if (!_carCustomizations.ContainsKey(carModelName))
+        {
+            _carCustomizations[carModelName] = new CarCustomization();
+            _carCustomizations[carModelName].carModelName = carModelName;
+        }
+        
+        if (_carCustomizations[carModelName].unlockedColors == null)
+        {
+            _carCustomizations[carModelName].unlockedColors = new bool[availableColors.Length];
+        }
+        
+        _carCustomizations[carModelName].unlockedColors[colorIndex] = true;
+        SaveCustomizations();
+        
+        OnColorUnlocked?.Invoke(carModelName, colorIndex);
+        
+        Debug.Log($"Color {availableColors[colorIndex].colorName} unlocked for {carModelName}");
+    }
+    
+    #endregion
+    
+    #region Upgrade Management Methods
+    
+    /// <summary>
+    /// Покупает улучшение двигателя
+    /// </summary>
+    public bool PurchaseEngineUpgrade(string carModelName, int level)
+    {
+        if (level < 0 || level >= engineUpgrades.Length)
+            return false;
+            
+        var upgrade = engineUpgrades[level];
+        
+        if (_dataModule != null && _dataModule.Data.coins >= upgrade.price)
+        {
+            _dataModule.Data.coins -= upgrade.price;
+            
+            // Сохраняем улучшение для машины
+            if (!_carCustomizations.ContainsKey(carModelName))
+            {
+                _carCustomizations[carModelName] = new CarCustomization();
+                _carCustomizations[carModelName].carModelName = carModelName;
+            }
+            
+            var customization = _carCustomizations[carModelName];
+            customization.engineLevel = level;
+            
+            if (customization.unlockedEngineLevels == null)
+                customization.unlockedEngineLevels = new bool[engineUpgrades.Length];
+                
+            customization.unlockedEngineLevels[level] = true;
+            
+            SaveCustomizations();
+            _dataModule.SaveData();
+            
+            OnEngineUpgraded?.Invoke(carModelName, level);
+            
+            Debug.Log($"Engine upgrade level {level} purchased for {upgrade.price} coins!");
+            return true;
+        }
+        
+        Debug.LogWarning($"Not enough coins to purchase engine upgrade level {level}. Required: {upgrade.price}, Available: {_dataModule?.Data.coins ?? 0}");
+        return false;
+    }
+    
+    /// <summary>
+    /// Покупает улучшение тормозов
+    /// </summary>
+    public bool PurchaseBrakeUpgrade(string carModelName, int level)
+    {
+        if (level < 0 || level >= brakeUpgrades.Length)
+            return false;
+            
+        var upgrade = brakeUpgrades[level];
+        
+        if (_dataModule != null && _dataModule.Data.coins >= upgrade.price)
+        {
+            _dataModule.Data.coins -= upgrade.price;
+            
+            if (!_carCustomizations.ContainsKey(carModelName))
+            {
+                _carCustomizations[carModelName] = new CarCustomization();
+                _carCustomizations[carModelName].carModelName = carModelName;
+            }
+            
+            var customization = _carCustomizations[carModelName];
+            customization.brakeLevel = level;
+            
+            if (customization.unlockedBrakeLevels == null)
+                customization.unlockedBrakeLevels = new bool[brakeUpgrades.Length];
+                
+            customization.unlockedBrakeLevels[level] = true;
+            
+            SaveCustomizations();
+            _dataModule.SaveData();
+            
+            OnBrakeUpgraded?.Invoke(carModelName, level);
+            
+            Debug.Log($"Brake upgrade level {level} purchased for {upgrade.price} coins!");
+            return true;
+        }
+        
+        Debug.LogWarning($"Not enough coins to purchase brake upgrade level {level}. Required: {upgrade.price}, Available: {_dataModule?.Data.coins ?? 0}");
+        return false;
+    }
+    
+    /// <summary>
+    /// Покупает улучшение нитро
+    /// </summary>
+    public bool PurchaseNitroUpgrade(string carModelName, int level)
+    {
+        if (level < 0 || level >= nitroUpgrades.Length)
+            return false;
+            
+        var upgrade = nitroUpgrades[level];
+        
+        if (_dataModule != null && _dataModule.Data.coins >= upgrade.price)
+        {
+            _dataModule.Data.coins -= upgrade.price;
+            
+            if (!_carCustomizations.ContainsKey(carModelName))
+            {
+                _carCustomizations[carModelName] = new CarCustomization();
+                _carCustomizations[carModelName].carModelName = carModelName;
+            }
+            
+            var customization = _carCustomizations[carModelName];
+            customization.nitroLevel = level;
+            
+            if (customization.unlockedNitroLevels == null)
+                customization.unlockedNitroLevels = new bool[nitroUpgrades.Length];
+                
+            customization.unlockedNitroLevels[level] = true;
+            
+            SaveCustomizations();
+            _dataModule.SaveData();
+            
+            OnNitroUpgraded?.Invoke(carModelName, level);
+            
+            Debug.Log($"Nitro upgrade level {level} purchased for {upgrade.price} coins!");
+            return true;
+        }
+        
+        Debug.LogWarning($"Not enough coins to purchase nitro upgrade level {level}. Required: {upgrade.price}, Available: {_dataModule?.Data.coins ?? 0}");
+        return false;
+    }
+    
+    /// <summary>
+    /// Покупает спойлер
+    /// </summary>
+    public bool PurchaseSpoiler(string carModelName, int spoilerIndex)
+    {
+        if (spoilerIndex < 0 || spoilerIndex >= availableSpoilers.Length)
+            return false;
+            
+        var spoiler = availableSpoilers[spoilerIndex];
+        
+        if (_dataModule != null && _dataModule.Data.coins >= spoiler.price)
+        {
+            _dataModule.Data.coins -= spoiler.price;
+            
+            if (!_carCustomizations.ContainsKey(carModelName))
+            {
+                _carCustomizations[carModelName] = new CarCustomization();
+                _carCustomizations[carModelName].carModelName = carModelName;
+            }
+            
+            var customization = _carCustomizations[carModelName];
+            customization.selectedSpoilerIndex = spoilerIndex;
+            
+            if (customization.unlockedSpoilers == null)
+                customization.unlockedSpoilers = new bool[availableSpoilers.Length];
+                
+            customization.unlockedSpoilers[spoilerIndex] = true;
+            
+            SaveCustomizations();
+            _dataModule.SaveData();
+            
+            OnSpoilerChanged?.Invoke(carModelName, spoilerIndex);
+            
+            Debug.Log($"Spoiler {spoiler.spoilerName} purchased for {spoiler.price} coins!");
+            return true;
+        }
+        
+        Debug.LogWarning($"Not enough coins to purchase spoiler {spoiler.spoilerName}. Required: {spoiler.price}, Available: {_dataModule?.Data.coins ?? 0}");
+        return false;
+    }
+    
+    /// <summary>
+    /// Проверяет разблокировано ли улучшение двигателя
+    /// </summary>
+    public bool IsEngineUpgradeUnlocked(string carModelName, int level)
+    {
+        if (level < 0 || level >= engineUpgrades.Length)
+            return false;
+            
+        if (engineUpgrades[level].isUnlocked)
+            return true;
+            
+        if (_carCustomizations.ContainsKey(carModelName))
+        {
+            var customization = _carCustomizations[carModelName];
+            if (customization.unlockedEngineLevels != null && level < customization.unlockedEngineLevels.Length)
+            {
+                return customization.unlockedEngineLevels[level];
+            }
+        }
+        
+        return false;
+    }
+    
+    /// <summary>
+    /// Проверяет разблокировано ли улучшение тормозов
+    /// </summary>
+    public bool IsBrakeUpgradeUnlocked(string carModelName, int level)
+    {
+        if (level < 0 || level >= brakeUpgrades.Length)
+            return false;
+            
+        if (brakeUpgrades[level].isUnlocked)
+            return true;
+            
+        if (_carCustomizations.ContainsKey(carModelName))
+        {
+            var customization = _carCustomizations[carModelName];
+            if (customization.unlockedBrakeLevels != null && level < customization.unlockedBrakeLevels.Length)
+            {
+                return customization.unlockedBrakeLevels[level];
+            }
+        }
+        
+        return false;
+    }
+    
+    /// <summary>
+    /// Проверяет разблокировано ли улучшение нитро
+    /// </summary>
+    public bool IsNitroUpgradeUnlocked(string carModelName, int level)
+    {
+        if (level < 0 || level >= nitroUpgrades.Length)
+            return false;
+            
+        if (nitroUpgrades[level].isUnlocked)
+            return true;
+            
+        if (_carCustomizations.ContainsKey(carModelName))
+        {
+            var customization = _carCustomizations[carModelName];
+            if (customization.unlockedNitroLevels != null && level < customization.unlockedNitroLevels.Length)
+            {
+                return customization.unlockedNitroLevels[level];
+            }
+        }
+        
+        return false;
+    }
+    
+    /// <summary>
+    /// Проверяет разблокирован ли спойлер
+    /// </summary>
+    public bool IsSpoilerUnlocked(string carModelName, int spoilerIndex)
+    {
+        if (spoilerIndex < 0 || spoilerIndex >= availableSpoilers.Length)
+            return false;
+            
+        if (availableSpoilers[spoilerIndex].isUnlocked)
+            return true;
+            
+        if (_carCustomizations.ContainsKey(carModelName))
+        {
+            var customization = _carCustomizations[carModelName];
+            if (customization.unlockedSpoilers != null && spoilerIndex < customization.unlockedSpoilers.Length)
+            {
+                return customization.unlockedSpoilers[spoilerIndex];
+            }
+        }
+        
+        return false;
+    }
+    
+    /// <summary>
+    /// Получает данные улучшения двигателя
+    /// </summary>
+    public UpgradeData GetEngineUpgradeData(int level)
+    {
+        if (level < 0 || level >= engineUpgrades.Length)
+            return null;
+        return engineUpgrades[level];
+    }
+    
+    /// <summary>
+    /// Получает данные улучшения тормозов
+    /// </summary>
+    public UpgradeData GetBrakeUpgradeData(int level)
+    {
+        if (level < 0 || level >= brakeUpgrades.Length)
+            return null;
+        return brakeUpgrades[level];
+    }
+    
+    /// <summary>
+    /// Получает данные улучшения нитро
+    /// </summary>
+    public UpgradeData GetNitroUpgradeData(int level)
+    {
+        if (level < 0 || level >= nitroUpgrades.Length)
+            return null;
+        return nitroUpgrades[level];
+    }
+    
+    /// <summary>
+    /// Получает данные спойлера
+    /// </summary>
+    public SpoilerData GetSpoilerData(int spoilerIndex)
+    {
+        if (spoilerIndex < 0 || spoilerIndex >= availableSpoilers.Length)
+            return null;
+        return availableSpoilers[spoilerIndex];
+    }
+    
+    /// <summary>
+    /// Получает количество уровней улучшений
+    /// </summary>
+    public int GetEngineUpgradeCount() => engineUpgrades.Length;
+    public int GetBrakeUpgradeCount() => brakeUpgrades.Length;
+    public int GetNitroUpgradeCount() => nitroUpgrades.Length;
+    public int GetSpoilerCount() => availableSpoilers.Length;
+    
+    #endregion
+    
+    #region Car Index Management Methods
+    
+    /// <summary>
+    /// Получает кастомизацию машины по индексу
+    /// </summary>
+    public CarCustomization GetCarCustomizationByIndex(int carIndex)
+    {
+        if (!_carCustomizationsByIndex.ContainsKey(carIndex))
+        {
+            _carCustomizationsByIndex[carIndex] = new CarCustomization();
+            _carCustomizationsByIndex[carIndex].carModelName = $"Car_{carIndex}";
+        }
+        return _carCustomizationsByIndex[carIndex];
+    }
+    
+    /// <summary>
+    /// Применяет кастомизацию к машине по индексу.
+    /// ВНИМАНИЕ: Используйте CarCustomizationApplier для применения к GameObject!
+    /// Этот метод для обратной совместимости.
+    /// </summary>
+    [System.Obsolete("Use CarCustomizationApplier.Instance.ApplyCustomization() instead")]
+    public void ApplyCustomizationToCarByIndex(GameObject carObject, int carIndex)
+    {
+        var customization = GetCarCustomizationByIndex(carIndex);
+        CarCustomizationApplier.Instance.ApplyCustomization(carObject, customization, this);
+        Debug.Log($"[CustomizationModule] Applied customization to car index {carIndex} via CarCustomizationApplier");
+    }
+    
+    /// <summary>
+    /// Сохраняет кастомизацию машины по индексу
+    /// </summary>
+    public void SaveCarCustomizationByIndex(int carIndex)
+    {
+        if (!_carCustomizationsByIndex.ContainsKey(carIndex))
+            return;
+            
+        var customization = _carCustomizationsByIndex[carIndex];
+        
+        // Сохраняем в DataModule
+        SaveCustomizationToDataModule(carIndex, customization);
+        _dataModule.SaveData();
+        
+        Debug.Log($"[CustomizationModule] Saved customization for car index {carIndex}");
+    }
+    
+    /// <summary>
+    /// Загружает кастомизацию машины по индексу
+    /// </summary>
+    public void LoadCarCustomizationByIndex(int carIndex)
+    {
+        var customization = LoadCustomizationFromDataModule(carIndex);
+        if (customization != null)
+        {
+            _carCustomizationsByIndex[carIndex] = customization;
+            Debug.Log($"[CustomizationModule] Loaded customization for car index {carIndex}");
+        }
+    }
+    
+    /// <summary>
+    /// Сохраняет кастомизацию в DataModule
+    /// </summary>
+    private void SaveCustomizationToDataModule(int carIndex, CarCustomization customization)
+    {
+        if (_dataModule == null) return;
+        
+        var data = new DataModule.CarCustomizationData
+        {
+            carIndex = carIndex,
+            colorR = customization.paintColor.r.ToString(),
+            colorG = customization.paintColor.g.ToString(),
+            colorB = customization.paintColor.b.ToString(),
+            colorA = customization.paintColor.a.ToString(),
+            selectedWheelIndex = customization.selectedWheelIndex,
+            selectedSpoilerIndex = customization.selectedSpoilerIndex,
+            engineLevel = customization.engineLevel,
+            brakeLevel = customization.brakeLevel,
+            nitroLevel = customization.nitroLevel,
+            handlingLevel = customization.handlingLevel,
+            unlockedColorsJson = JsonUtility.ToJson(new BoolArrayWrapper { values = customization.unlockedColors }),
+            unlockedEngineLevelsJson = JsonUtility.ToJson(new BoolArrayWrapper { values = customization.unlockedEngineLevels }),
+            unlockedBrakeLevelsJson = JsonUtility.ToJson(new BoolArrayWrapper { values = customization.unlockedBrakeLevels }),
+            unlockedNitroLevelsJson = JsonUtility.ToJson(new BoolArrayWrapper { values = customization.unlockedNitroLevels }),
+            unlockedHandlingLevelsJson = JsonUtility.ToJson(new BoolArrayWrapper { values = customization.unlockedHandlingLevels }),
+            unlockedSpoilersJson = JsonUtility.ToJson(new BoolArrayWrapper { values = customization.unlockedSpoilers })
+        };
+        
+        // Сохраняем в PlayerPrefs по ключу
+        string key = $"CarCustomization_{carIndex}";
+        string json = JsonUtility.ToJson(data);
+        PlayerPrefs.SetString(key, json);
+    }
+    
+    /// <summary>
+    /// Загружает кастомизацию из DataModule
+    /// </summary>
+    private CarCustomization LoadCustomizationFromDataModule(int carIndex)
+    {
+        string key = $"CarCustomization_{carIndex}";
+        if (!PlayerPrefs.HasKey(key))
+            return null;
+            
+        string json = PlayerPrefs.GetString(key);
+        var data = JsonUtility.FromJson<DataModule.CarCustomizationData>(json);
+        
+        var customization = new CarCustomization
+        {
+            carModelName = $"Car_{carIndex}",
+            paintColor = new Color(
+                float.Parse(data.colorR),
+                float.Parse(data.colorG),
+                float.Parse(data.colorB),
+                float.Parse(data.colorA)
+            ),
+            selectedWheelIndex = data.selectedWheelIndex,
+            selectedSpoilerIndex = data.selectedSpoilerIndex,
+            engineLevel = data.engineLevel,
+            brakeLevel = data.brakeLevel,
+            nitroLevel = data.nitroLevel,
+            handlingLevel = data.handlingLevel
+        };
+        
+        // Загружаем массивы разблокировок
+        if (!string.IsNullOrEmpty(data.unlockedColorsJson))
+        {
+            var wrapper = JsonUtility.FromJson<BoolArrayWrapper>(data.unlockedColorsJson);
+            customization.unlockedColors = wrapper.values;
+        }
+        
+        if (!string.IsNullOrEmpty(data.unlockedEngineLevelsJson))
+        {
+            var wrapper = JsonUtility.FromJson<BoolArrayWrapper>(data.unlockedEngineLevelsJson);
+            customization.unlockedEngineLevels = wrapper.values;
+        }
+        
+        if (!string.IsNullOrEmpty(data.unlockedBrakeLevelsJson))
+        {
+            var wrapper = JsonUtility.FromJson<BoolArrayWrapper>(data.unlockedBrakeLevelsJson);
+            customization.unlockedBrakeLevels = wrapper.values;
+        }
+        
+        if (!string.IsNullOrEmpty(data.unlockedNitroLevelsJson))
+        {
+            var wrapper = JsonUtility.FromJson<BoolArrayWrapper>(data.unlockedNitroLevelsJson);
+            customization.unlockedNitroLevels = wrapper.values;
+        }
+        
+        if (!string.IsNullOrEmpty(data.unlockedHandlingLevelsJson))
+        {
+            var wrapper = JsonUtility.FromJson<BoolArrayWrapper>(data.unlockedHandlingLevelsJson);
+            customization.unlockedHandlingLevels = wrapper.values;
+        }
+        
+        if (!string.IsNullOrEmpty(data.unlockedSpoilersJson))
+        {
+            var wrapper = JsonUtility.FromJson<BoolArrayWrapper>(data.unlockedSpoilersJson);
+            customization.unlockedSpoilers = wrapper.values;
+        }
+        
+        return customization;
+    }
+    
+    [System.Serializable]
+    private class BoolArrayWrapper
+    {
+        public bool[] values;
+    }
+    
+    /// <summary>
+    /// Загружает все кастомизации при инициализации
+    /// </summary>
+    public void LoadAllCarCustomizations()
+    {
+        for (int i = 0; i < 5; i++) // 5 машин в магазине
+        {
+            LoadCarCustomizationByIndex(i);
+        }
+    }
+    
+    #endregion
 }
