@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataModule : BaseGameModule, IPersistentModule
@@ -51,6 +52,11 @@ public class DataModule : BaseGameModule, IPersistentModule
         LoadData();
         base.Initialize();
     }
+
+    public override void Update()
+    {
+        ResetData();
+    }
     
     public void SaveData()
     {
@@ -66,5 +72,36 @@ public class DataModule : BaseGameModule, IPersistentModule
             var json = PlayerPrefs.GetString(SAVE_KEY);
             _data = JsonUtility.FromJson<GameData>(json);
         }
+    }
+    
+    /// <summary>
+    /// Сбросить все сохранения игры к значениям по умолчанию
+    /// </summary>
+    public void ResetData()
+    {
+        Debug.LogWarning("[DataModule] Сброс всех сохранений!");
+        
+        // Удаляем все сохранения из PlayerPrefs
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        
+        // Создаем новые данные по умолчанию
+        _data = new GameData();
+        
+        // Также очищаем кастомизацию всех машин
+        var customizationModule = ModuleManager.Instance?.GetModule<CustomizationModule>();
+        if (customizationModule != null)
+        {
+            // Сбрасываем кастомизацию для всех 5 машин
+            for (int i = 0; i < 5; i++)
+            {
+                PlayerPrefs.DeleteKey($"CarCustomization_{i}");
+            }
+        }
+        
+        // Сохраняем новые данные
+        SaveData();
+        
+        Debug.Log("[DataModule] ✅ Все сохранения успешно сброшены!");
     }
 }

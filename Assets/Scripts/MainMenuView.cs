@@ -9,6 +9,8 @@ public class MainMenuView : MonoBehaviour
     public Button PlayButton => _playButton;
 
     [SerializeField] private Button _tuningButton;
+    public Button TuningButton => _tuningButton;
+    
     [SerializeField] private GameObject _tuningCanvas;
     [SerializeField] private GameObject _mainMenuCanvas;
     [SerializeField] private GameObject _shopCanvas;

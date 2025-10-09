@@ -65,6 +65,7 @@ public class ShopController : MonoBehaviour
             _shopUIView.BuyButton.gameObject.SetActive(false);
             _shopUIView.PriceText.gameObject.SetActive(false);
             _mainMenuView.PlayButton.gameObject.SetActive(true);
+            _mainMenuView.TuningButton.gameObject.SetActive(true);
         }
         else
         {
@@ -72,6 +73,7 @@ public class ShopController : MonoBehaviour
             _shopUIView.PriceText.gameObject.SetActive(true);
             _shopUIView.BuyButton.gameObject.SetActive(true);
             _mainMenuView.PlayButton.gameObject.SetActive(false);
+            _mainMenuView.TuningButton.gameObject.SetActive(false);
         }
     }
     
