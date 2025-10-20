@@ -13,11 +13,7 @@ public class CarUpGradeHandler : MonoBehaviour
     [SerializeField] private SpoilerCustomizationModule _spoilerModule;
     [SerializeField] private DataModule _dataModule;
 
-    [Header("Менеджеры кастомизации")]
-    [SerializeField] private PaintManager _paintManager;
-    [SerializeField] private WheelsManager _wheelsManager;
-    [SerializeField] private UpgradeManager _upgradeManager;
-    [SerializeField] private SpoilerManager _spoilerManager;
+    [SerializeField] private Car _cars[];
 
     [Header("Настройки сохранения")]
     public string saveFileName = "";
@@ -66,22 +62,6 @@ public class CarUpGradeHandler : MonoBehaviour
 
         if (_dataModule != null)
             _currentCarIndex = _dataModule.Data.appliedCarIndex;
-    }
-
-    private void InitializeManagers()
-    {
-        // Инициализируем все менеджеры с текущими данными
-        if (_paintManager != null)
-            _paintManager.Initialize(loadout.paintColor);
-
-        if (_wheelsManager != null)
-            _wheelsManager.Initialize(loadout.wheelIndex);
-
-        if (_upgradeManager != null)
-            _upgradeManager.Initialize(loadout.engineLevel, loadout.brakeLevel, loadout.handlingLevel, loadout.nitroLevel);
-
-        if (_spoilerManager != null)
-            _spoilerManager.Initialize(loadout.spoilerIndex);
     }
 
     #endregion
