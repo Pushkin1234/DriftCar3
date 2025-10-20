@@ -88,16 +88,6 @@ public class DataModule : BaseGameModule, IPersistentModule
         // Создаем новые данные по умолчанию
         _data = new GameData();
         
-        // Также очищаем кастомизацию всех машин
-        var customizationModule = ModuleManager.Instance?.GetModule<CustomizationModule>();
-        if (customizationModule != null)
-        {
-            // Сбрасываем кастомизацию для всех 5 машин
-            for (int i = 0; i < 5; i++)
-            {
-                PlayerPrefs.DeleteKey($"CarCustomization_{i}");
-            }
-        }
         
         // Сохраняем новые данные
         SaveData();

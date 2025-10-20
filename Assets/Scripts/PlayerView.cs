@@ -10,12 +10,18 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private List<GameObject> _cars;
 
     private DataModule _dataModule;
-    private CustomizationModule _customizationModule;
+    private PaintCustomizationModule _paintModule;
+    private WheelCustomizationModule _wheelModule;
+    private PerformanceUpgradeModule _performanceModule;
+    private SpoilerCustomizationModule _spoilerModule;
 
     private void Awake()
     {
         _dataModule = ModuleManager.Instance.GetModule<DataModule>();
-        _customizationModule = ModuleManager.Instance.GetModule<CustomizationModule>();
+        _paintModule = ModuleManager.Instance.GetModule<PaintCustomizationModule>();
+        _wheelModule = ModuleManager.Instance.GetModule<WheelCustomizationModule>();
+        _performanceModule = ModuleManager.Instance.GetModule<PerformanceUpgradeModule>();
+        _spoilerModule = ModuleManager.Instance.GetModule<SpoilerCustomizationModule>();
     }
 
     private void Start()
@@ -48,20 +54,7 @@ public class PlayerView : MonoBehaviour
     /// </summary>
     private void ApplyCustomization(int carIndex)
     {
-        if (_customizationModule == null || carIndex < 0 || carIndex >= _cars.Count)
-            return;
-            
-        var activeCar = _cars[carIndex];
-        if (activeCar != null && activeCar.activeSelf)
-        {
-            // Получаем кастомизацию из Module
-            var customization = _customizationModule.GetCarCustomizationByIndex(carIndex);
-            
-            // Применяем через сервис
-            CarCustomizationApplier.Instance.ApplyCustomization(activeCar, customization, _customizationModule);
-            
-            Debug.Log($"[PlayerView] Applied customization to car index {carIndex} on Level scene");
-        }
+    
     }
     
     /// <summary>

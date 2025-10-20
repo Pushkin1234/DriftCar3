@@ -84,14 +84,7 @@ public class GameController : MonoBehaviour
             Debug.Log("Created WebGLModule (Global)");
         }
         
-        // CustomizationModule - глобальный (настройки кастомизации машин)
-        if (needsCustomizationModule && !ModuleManager.Instance.HasModule<CustomizationModule>())
-        {
-            var customizationModule = ModuleManager.Instance.gameObject.AddComponent<CustomizationModule>();
-            ModuleManager.Instance.RegisterModule(customizationModule);
-            customizationModule.Initialize();
-            Debug.Log("Created CustomizationModule (Global)");
-        }
+       
         
         // UpgradeModule - глобальный (прокачка характеристик машин)
         if (!ModuleManager.Instance.HasModule<UpgradeModule>())

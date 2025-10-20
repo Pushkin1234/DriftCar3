@@ -24,14 +24,26 @@ public class CarCustomizationApplier : MonoBehaviour
     /// <summary>
     /// Применяет кастомизацию к машине
     /// </summary>
-    public void ApplyCustomization(GameObject carObject, CustomizationModule.CarCustomization customization, CustomizationModule module)
+    public void ApplyCustomization(GameObject carObject, int carIndex)
     {
-        if (carObject == null || customization == null) return;
+        if (carObject == null) return;
         
-        ApplyPaint(carObject, customization.paintColor);
-        ApplyWheels(carObject, customization.selectedWheelIndex, module);
-        ApplySpoiler(carObject, customization.selectedSpoilerIndex, module);
-        ApplyUpgrades(carObject, customization, module);
+        var paintModule = ModuleManager.Instance?.GetModule<PaintCustomizationModule>();
+        var wheelModule = ModuleManager.Instance?.GetModule<WheelCustomizationModule>();
+        var spoilerModule = ModuleManager.Instance?.GetModule<SpoilerCustomizationModule>();
+        var performanceModule = ModuleManager.Instance?.GetModule<PerformanceUpgradeModule>();
+        
+        if (paintModule != null)
+            ApplyPaint(carObject, paintModule.GetCurrentColor(carIndex));
+        
+        if (wheelModule != null)
+            ApplyWheels(carObject, wheelModule.GetCurrentWheelIndex(carIndex), wheelModule);
+        
+        if (spoilerModule != null)
+            ApplySpoiler(carObject, spoilerModule.GetCurrentSpoilerIndex(carIndex), spoilerModule);
+        
+        if (performanceModule != null)
+            ApplyUpgrades(carObject, carIndex, performanceModule);
         
         Debug.Log($"[CarCustomizationApplier] Applied customization to {carObject.name}");
     }
@@ -74,7 +86,7 @@ public class CarCustomizationApplier : MonoBehaviour
     
     #region Wheels Application
     
-    private void ApplyWheels(GameObject carObject, int wheelIndex, CustomizationModule module)
+    private void ApplyWheels(GameObject carObject, int wheelIndex, WheelCustomizationModule module)
     {
         var wheelData = module.GetWheelData(wheelIndex);
         if (wheelData == null || wheelData.wheelPrefab == null) return;
@@ -123,7 +135,7 @@ public class CarCustomizationApplier : MonoBehaviour
     
     #region Spoiler Application
     
-    private void ApplySpoiler(GameObject carObject, int spoilerIndex, CustomizationModule module)
+    private void ApplySpoiler(GameObject carObject, int spoilerIndex, SpoilerCustomizationModule module)
     {
         if (spoilerIndex < 0) return;
         
@@ -159,19 +171,24 @@ public class CarCustomizationApplier : MonoBehaviour
     
     #region Upgrades Application
     
-    private void ApplyUpgrades(GameObject carObject, CustomizationModule.CarCustomization customization, CustomizationModule module)
+    private void ApplyUpgrades(GameObject carObject, int carIndex, PerformanceUpgradeModule module)
     {
         var carController = carObject.GetComponent<RCC_CarControllerV3>();
         if (carController == null) return;
+        
+        // Получаем текущие уровни улучшений
+        int engineLevel = module.GetEngineLevel(carIndex);
+        int brakeLevel = module.GetBrakeLevel(carIndex);
+        int nitroLevel = module.GetNitroLevel(carIndex);
         
         // Получаем базовые значения
         float baseEngineTorque = carController.maxEngineTorque;
         float baseBrakeTorque = carController.brakeTorque;
         
         // Применяем улучшения двигателя
-        if (customization.engineLevel > 0 && customization.engineLevel < module.GetEngineUpgradeCount())
+        if (engineLevel > 0)
         {
-            var engineUpgrade = module.GetEngineUpgradeData(customization.engineLevel);
+            var engineUpgrade = module.GetEngineUpgradeData(engineLevel);
             if (engineUpgrade != null)
             {
                 carController.maxEngineTorque = baseEngineTorque * engineUpgrade.powerMultiplier;
@@ -179,9 +196,9 @@ public class CarCustomizationApplier : MonoBehaviour
         }
         
         // Применяем улучшения тормозов
-        if (customization.brakeLevel > 0 && customization.brakeLevel < module.GetBrakeUpgradeCount())
+        if (brakeLevel > 0)
         {
-            var brakeUpgrade = module.GetBrakeUpgradeData(customization.brakeLevel);
+            var brakeUpgrade = module.GetBrakeUpgradeData(brakeLevel);
             if (brakeUpgrade != null)
             {
                 carController.brakeTorque = baseBrakeTorque * brakeUpgrade.powerMultiplier;
@@ -190,13 +207,13 @@ public class CarCustomizationApplier : MonoBehaviour
         
         // Применяем улучшения нитро
         var nitroModule = carObject.GetComponent<NitroModule>();
-        if (nitroModule != null && customization.nitroLevel > 0)
+        if (nitroModule != null && nitroLevel > 0)
         {
-            var nitroUpgrade = module.GetNitroUpgradeData(customization.nitroLevel);
+            var nitroUpgrade = module.GetNitroUpgradeData(nitroLevel);
             // NitroModule сам должен применить улучшение
         }
         
-        Debug.Log($"[CarCustomizationApplier] Applied upgrades: Engine={customization.engineLevel}, Brake={customization.brakeLevel}, Nitro={customization.nitroLevel}");
+        Debug.Log($"[CarCustomizationApplier] Applied upgrades: Engine={engineLevel}, Brake={brakeLevel}, Nitro={nitroLevel}");
     }
     
     #endregion

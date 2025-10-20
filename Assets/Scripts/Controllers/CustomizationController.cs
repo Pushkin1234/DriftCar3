@@ -1,15 +1,18 @@
 using UnityEngine;
 
 /// <summary>
-/// Контроллер панели кастомизации. Связывает CustomizationView и CustomizationModule.
-/// Отвечает ТОЛЬКО за обработку событий и передачу данных между View и Module.
+/// Контроллер панели кастомизации. Связывает CustomizationView с модулями кастомизации.
+/// Отвечает ТОЛЬКО за обработку событий и передачу данных между View и Modules.
 /// НЕ содержит бизнес-логики и работы с UI элементами.
 /// </summary>
 public class CustomizationController : MonoBehaviour
 {
     [SerializeField] private CustomizationView _view;
     
-    private CustomizationModule _customizationModule;
+    private PaintCustomizationModule _paintModule;
+    private WheelCustomizationModule _wheelModule;
+    private PerformanceUpgradeModule _performanceModule;
+    private SpoilerCustomizationModule _spoilerModule;
     private DataModule _dataModule;
     private int _currentCarIndex;
     
@@ -38,12 +41,20 @@ public class CustomizationController : MonoBehaviour
     
     private void InitializeModules()
     {
-        _customizationModule = ModuleManager.Instance?.GetModule<CustomizationModule>();
+        _paintModule = ModuleManager.Instance?.GetModule<PaintCustomizationModule>();
+        _wheelModule = ModuleManager.Instance?.GetModule<WheelCustomizationModule>();
+        _performanceModule = ModuleManager.Instance?.GetModule<PerformanceUpgradeModule>();
+        _spoilerModule = ModuleManager.Instance?.GetModule<SpoilerCustomizationModule>();
         _dataModule = ModuleManager.Instance?.GetModule<DataModule>();
         
-        if (_customizationModule == null)
-            Debug.LogError("[CustomizationController] CustomizationModule not found!");
-            
+        if (_paintModule == null)
+            Debug.LogError("[CustomizationController] PaintCustomizationModule not found!");
+        if (_wheelModule == null)
+            Debug.LogError("[CustomizationController] WheelCustomizationModule not found!");
+        if (_performanceModule == null)
+            Debug.LogError("[CustomizationController] PerformanceUpgradeModule not found!");
+        if (_spoilerModule == null)
+            Debug.LogError("[CustomizationController] SpoilerCustomizationModule not found!");
         if (_dataModule == null)
             Debug.LogError("[CustomizationController] DataModule not found!");
         else
@@ -52,16 +63,15 @@ public class CustomizationController : MonoBehaviour
     
     private void LoadCarCustomization()
     {
-        if (_customizationModule == null) return;
-        
-        var customization = _customizationModule.GetCarCustomizationByIndex(_currentCarIndex);
+        if (_paintModule == null || _wheelModule == null || _performanceModule == null || _spoilerModule == null)
+            return;
         
         _selectedColorIndex = 0;
-        _selectedWheelIndex = customization.selectedWheelIndex;
-        _selectedEngineLevel = customization.engineLevel;
-        _selectedBrakeLevel = customization.brakeLevel;
-        _selectedNitroLevel = customization.nitroLevel;
-        _selectedSpoilerIndex = customization.selectedSpoilerIndex;
+        _selectedWheelIndex = _wheelModule.GetCurrentWheelIndex(_currentCarIndex);
+        _selectedEngineLevel = _performanceModule.GetEngineLevel(_currentCarIndex);
+        _selectedBrakeLevel = _performanceModule.GetBrakeLevel(_currentCarIndex);
+        _selectedNitroLevel = _performanceModule.GetNitroLevel(_currentCarIndex);
+        _selectedSpoilerIndex = _spoilerModule.GetCurrentSpoilerIndex(_currentCarIndex);
         
         RefreshAllPanels();
     }
@@ -169,7 +179,6 @@ public class CustomizationController : MonoBehaviour
     {
         SaveCarCustomization();
         Debug.Log("[CustomizationController] Exit requested");
-        
     }
     
     private void HandleBackRequest()
@@ -193,8 +202,7 @@ public class CustomizationController : MonoBehaviour
         _selectedColorIndex = colorIndex;
         
         // Применяем цвет для предварительного просмотра через Module
-        string carName = $"Car_{_currentCarIndex}";
-        _customizationModule.SelectColor(carName, colorIndex);
+        _paintModule.SelectColor(_currentCarIndex, colorIndex);
         
         // Обновляем UI через View
         RefreshColorPanel();
@@ -202,8 +210,7 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleColorPurchase()
     {
-        string carName = $"Car_{_currentCarIndex}";
-        bool success = _customizationModule.PurchaseColor(carName, _selectedColorIndex);
+        bool success = _paintModule.PurchaseColor(_currentCarIndex, _selectedColorIndex);
         
         if (success)
         {
@@ -213,11 +220,10 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleColorSelect()
     {
-        var colorData = _customizationModule.GetColorData(_selectedColorIndex);
+        var colorData = _paintModule.GetColorData(_selectedColorIndex);
         if (colorData != null)
         {
-            string carName = $"Car_{_currentCarIndex}";
-            _customizationModule.PaintCar(carName, colorData.color);
+            _paintModule.PaintCar(_currentCarIndex, colorData.color);
         }
     }
     
@@ -233,7 +239,7 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleWheelPurchase()
     {
-        bool success = _customizationModule.UnlockWheel(_selectedWheelIndex);
+        bool success = _wheelModule.PurchaseWheel(_selectedWheelIndex);
         
         if (success)
         {
@@ -243,8 +249,7 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleWheelSelect()
     {
-        string carName = $"Car_{_currentCarIndex}";
-        _customizationModule.ChangeWheels(carName, _selectedWheelIndex);
+        _wheelModule.ChangeWheels(_currentCarIndex, _selectedWheelIndex);
     }
     
     #endregion
@@ -271,12 +276,11 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleUpgradePurchase()
     {
-        string carName = $"Car_{_currentCarIndex}";
         bool success = false;
         
         // Определяем какое улучшение покупаем (последнее выбранное)
         // В идеале нужно добавить флаг активного типа улучшения
-        success = _customizationModule.PurchaseEngineUpgrade(carName, _selectedEngineLevel);
+        success = _performanceModule.PurchaseEngineUpgrade(_currentCarIndex, _selectedEngineLevel);
         
         if (success)
         {
@@ -301,8 +305,7 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleSpoilerPurchase()
     {
-        string carName = $"Car_{_currentCarIndex}";
-        bool success = _customizationModule.PurchaseSpoiler(carName, _selectedSpoilerIndex);
+        bool success = _spoilerModule.PurchaseSpoiler(_currentCarIndex, _selectedSpoilerIndex);
         
         if (success)
         {
@@ -312,9 +315,10 @@ public class CustomizationController : MonoBehaviour
     
     private void HandleSpoilerSelect()
     {
-        var spoilerData = _customizationModule.GetSpoilerData(_selectedSpoilerIndex);
+        var spoilerData = _spoilerModule.GetSpoilerData(_selectedSpoilerIndex);
         if (spoilerData != null)
         {
+            _spoilerModule.ChangeSpoiler(_currentCarIndex, _selectedSpoilerIndex);
             Debug.Log($"Spoiler {spoilerData.spoilerName} applied");
         }
     }
@@ -333,90 +337,90 @@ public class CustomizationController : MonoBehaviour
     
     private void RefreshColorPanel()
     {
-        string carName = $"Car_{_currentCarIndex}";
+        if (_paintModule == null) return;
         
         // Обновляем все кнопки цветов
-        for (int i = 0; i < _customizationModule.GetColorCount(); i++)
+        for (int i = 0; i < _paintModule.GetColorCount(); i++)
         {
-            bool isUnlocked = _customizationModule.IsColorUnlocked(carName, i);
+            bool isUnlocked = _paintModule.IsColorUnlocked(_currentCarIndex, i);
             _view.UpdateColorButtonState(i, isUnlocked);
         }
         
         // Обновляем информацию о выбранном цвете
-        var colorData = _customizationModule.GetColorData(_selectedColorIndex);
+        var colorData = _paintModule.GetColorData(_selectedColorIndex);
         if (colorData != null)
         {
-            bool isUnlocked = _customizationModule.IsColorUnlocked(carName, _selectedColorIndex);
+            bool isUnlocked = _paintModule.IsColorUnlocked(_currentCarIndex, _selectedColorIndex);
             _view.UpdateColorUI(colorData.price, isUnlocked, colorData.color);
         }
     }
     
     private void RefreshWheelsPanel()
     {
-        string carName = $"Car_{_currentCarIndex}";
+        if (_wheelModule == null) return;
         
-        for (int i = 0; i < _customizationModule.GetWheelCount(); i++)
+        for (int i = 0; i < _wheelModule.GetWheelCount(); i++)
         {
-            bool isUnlocked = _customizationModule.IsWheelUnlocked(i);
+            bool isUnlocked = _wheelModule.IsWheelUnlocked(i);
             _view.UpdateWheelButtonState(i, isUnlocked);
         }
         
-        var wheelData = _customizationModule.GetWheelData(_selectedWheelIndex);
+        var wheelData = _wheelModule.GetWheelData(_selectedWheelIndex);
         if (wheelData != null)
         {
-            bool isUnlocked = _customizationModule.IsWheelUnlocked(_selectedWheelIndex);
+            bool isUnlocked = _wheelModule.IsWheelUnlocked(_selectedWheelIndex);
             _view.UpdateWheelUI(wheelData.price, isUnlocked);
         }
     }
     
     private void RefreshUpgradePanel()
     {
-        string carName = $"Car_{_currentCarIndex}";
+        if (_performanceModule == null) return;
         
         // Обновляем кнопки двигателя
-        for (int i = 0; i < _customizationModule.GetEngineUpgradeCount(); i++)
+        for (int i = 0; i < _performanceModule.GetEngineUpgradeCount(); i++)
         {
-            bool isUnlocked = _customizationModule.IsEngineUpgradeUnlocked(carName, i);
+            bool isUnlocked = _performanceModule.IsEngineUpgradeUnlocked(_currentCarIndex, i);
             _view.UpdateEngineButtonState(i, isUnlocked);
         }
         
         // Обновляем кнопки тормозов
-        for (int i = 0; i < _customizationModule.GetBrakeUpgradeCount(); i++)
+        for (int i = 0; i < _performanceModule.GetBrakeUpgradeCount(); i++)
         {
-            bool isUnlocked = _customizationModule.IsBrakeUpgradeUnlocked(carName, i);
+            bool isUnlocked = _performanceModule.IsBrakeUpgradeUnlocked(_currentCarIndex, i);
             _view.UpdateBrakeButtonState(i, isUnlocked);
         }
         
         // Обновляем кнопки нитро
-        for (int i = 0; i < _customizationModule.GetNitroUpgradeCount(); i++)
+        for (int i = 0; i < _performanceModule.GetNitroUpgradeCount(); i++)
         {
-            bool isUnlocked = _customizationModule.IsNitroUpgradeUnlocked(carName, i);
+            bool isUnlocked = _performanceModule.IsNitroUpgradeUnlocked(_currentCarIndex, i);
             _view.UpdateNitroButtonState(i, isUnlocked);
         }
         
         // Обновляем информацию о выбранном улучшении
-        var upgradeData = _customizationModule.GetEngineUpgradeData(_selectedEngineLevel);
+        var upgradeData = _performanceModule.GetEngineUpgradeData(_selectedEngineLevel);
         if (upgradeData != null)
         {
-            bool isUnlocked = _customizationModule.IsEngineUpgradeUnlocked(carName, _selectedEngineLevel);
+            bool isUnlocked = _performanceModule.IsEngineUpgradeUnlocked(_currentCarIndex, _selectedEngineLevel);
             _view.UpdateUpgradeUI(upgradeData.price, isUnlocked);
         }
     }
     
     private void RefreshSpoilerPanel()
     {
-        string carName = $"Car_{_currentCarIndex}";
+        if (_spoilerModule == null) return;
         
-        for (int i = 0; i < _customizationModule.GetSpoilerCount(); i++)
+        for (int i = 0; i < _spoilerModule.GetSpoilerCount(); i++)
         {
-            bool isUnlocked = _customizationModule.IsSpoilerUnlocked(carName, i);
+            bool isUnlocked = _spoilerModule.IsSpoilerUnlocked(_currentCarIndex, i);
             _view.UpdateSpoilerButtonState(i, isUnlocked);
         }
         
-        var spoilerData = _customizationModule.GetSpoilerData(_selectedSpoilerIndex);
+        var spoilerData = _spoilerModule.GetSpoilerData(_selectedSpoilerIndex);
         if (spoilerData != null)
         {
-            bool isUnlocked = _customizationModule.IsSpoilerUnlocked(carName, _selectedSpoilerIndex);
+            bool isUnlocked = _spoilerModule.IsSpoilerUnlocked(_currentCarIndex, _selectedSpoilerIndex);
             _view.UpdateSpoilerUI(spoilerData.price, isUnlocked);
         }
     }
@@ -427,9 +431,8 @@ public class CustomizationController : MonoBehaviour
     
     private void SaveCarCustomization()
     {
-        if (_customizationModule == null) return;
-        
-        _customizationModule.SaveCarCustomizationByIndex(_currentCarIndex);
+        // Модули автоматически сохраняют данные при изменениях
+        // Но можем явно вызвать сохранение для гарантии
         Debug.Log($"[CustomizationController] Saved customization for car {_currentCarIndex}");
     }
     
