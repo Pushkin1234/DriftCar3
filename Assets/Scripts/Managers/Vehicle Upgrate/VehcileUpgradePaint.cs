@@ -4,7 +4,7 @@ using UnityEngine;
 /// Скрипт для покраски частей автомобиля с поддержкой кастомизации.
 /// Должен находиться на дочернем объекте машины и обращаться к CarUpGradeHandler родителя.
 /// </summary>
-public class VehcileUpgratePaint : MonoBehaviour
+public class VehcileUpgadrePaint : MonoBehaviour
 {
     private CarUpGradeHandler _modApplier;
     public CarUpGradeHandler ModApplier {

@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PaintManager : MonoBehaviour
 {
-    public VehcileUpgratePaint[] paints; // Все paint-модули, которые можно красить
+    public VehcileUpgadrePaint[] paints; // Все paint-модули, которые можно красить
 
     /// <summary>
     /// Инициализация — покрасить все части в цвет из лоад-аута машины.
@@ -15,7 +15,7 @@ public class PaintManager : MonoBehaviour
     public void Initialize(Color? initialColor = null)
     {
         if (paints == null || paints.Length == 0)
-            paints = GetComponentsInChildren<VehcileUpgratePaint>();
+            paints = GetComponentsInChildren<VehcileUpgadrePaint>();
 
         // Можно явно задать цвет (например, из save)
         if (initialColor.HasValue)

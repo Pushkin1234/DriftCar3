@@ -13,7 +13,12 @@ public class CarUpGradeHandler : MonoBehaviour
     [SerializeField] private SpoilerCustomizationModule _spoilerModule;
     [SerializeField] private DataModule _dataModule;
 
-    [SerializeField] private Car _cars[];
+    [SerializeField] private PaintManager _paintManager;
+    [SerializeField] private WheelsManager _wheelsManager;
+    [SerializeField] private UpgradeManager _upgradeManager;
+    [SerializeField] private SpoilerManager _spoilersManager;
+
+    [SerializeField] private Car _car;
 
     [Header("Настройки сохранения")]
     public string saveFileName = "";
@@ -39,6 +44,10 @@ public class CarUpGradeHandler : MonoBehaviour
 
     private void Start()
     {
+        // Найти Car, если не назначен
+        if (_car == null)
+            _car = GetComponentInChildren<Car>();
+
         InitializeModules();
         
         if (autoLoadLoadout)
@@ -81,6 +90,38 @@ public class CarUpGradeHandler : MonoBehaviour
 
         // Также сохраняем через модули для централизованного хранения
         SaveToModules();
+    }
+
+    public void InitializeManagers()
+    {
+        if(_car != null)
+        {
+            _car.InitializeManagers(loadout);
+
+            _paintManager = _car.GetPaintManager();
+            _wheelsManager = _car.GetWheelsManager();
+            _upgradeManager = _car.GetUpgradeManager();
+            _spoilersManager = _car.GetSpoilerManager();
+        }
+        else
+        {
+            if(_paintManager == null)
+            {
+                _paintManager = GetComponentInChildren<PaintManager>();
+            }
+            if(_wheelsManager == null)
+            {
+                _wheelsManager = GetComponentInChildren<WheelsManager>();
+            }
+            if(_upgradeManager == null)
+            {
+                _upgradeManager = GetComponentInChildren<UpgradeManager>();
+            }
+            if(_spoilersManager == null)
+            {
+                _spoilersManager = GetComponentInChildren<SpoilerManager>();
+            }
+        }
     }
 
     /// <summary>
@@ -220,8 +261,8 @@ public class CarUpGradeHandler : MonoBehaviour
     public void SetSpoilerIndex(int spoilerIndex)
     {
         loadout.spoilerIndex = spoilerIndex;
-        if (_spoilerManager != null)
-            _spoilerManager.SetCurrentSpoiler(spoilerIndex);
+        if (_spoilersManager != null)
+            _spoilersManager.SetCurrentSpoiler(spoilerIndex);
     }
 
     #endregion
