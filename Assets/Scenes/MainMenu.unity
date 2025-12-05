@@ -934,6 +934,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 58499919}
+  - component: {fileID: 58499920}
   m_Layer: 8
   m_Name: Upgrade
   m_TagString: Untagged
@@ -960,6 +961,22 @@ Transform:
   - {fileID: 88968117}
   m_Father: {fileID: 1379050249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &58499920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58499918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6dd0d9c2e5c54045b25a4994fb6976b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineUpgrades: []
+  brakeUpgrades: []
+  nitroUpgrades: []
+  handlingUpgrades: []
 --- !u!1 &59187655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,10 +1411,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -683}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &71990389
 MonoBehaviour:
@@ -2635,10 +2652,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -531}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &163292789
 MonoBehaviour:
@@ -3722,7 +3739,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00005973807}
-  m_SizeDelta: {x: 0, y: 910}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &243090888
 MonoBehaviour:
@@ -4319,6 +4336,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 309088992}
+  - component: {fileID: 309088993}
   m_Layer: 8
   m_Name: Paint
   m_TagString: Untagged
@@ -4353,6 +4371,19 @@ Transform:
   - {fileID: 1659530447}
   m_Father: {fileID: 671516312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &309088993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309088991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171b76b99ef6d374090e1727018f8deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paints: []
 --- !u!1 &310568707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4373,7 +4404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &310568708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5050,6 +5081,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 335101431}
+  - component: {fileID: 335101432}
   m_Layer: 8
   m_Name: Upgrade
   m_TagString: Untagged
@@ -5076,6 +5108,22 @@ Transform:
   - {fileID: 49472574}
   m_Father: {fileID: 671516312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &335101432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335101430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6dd0d9c2e5c54045b25a4994fb6976b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineUpgrades: []
+  brakeUpgrades: []
+  nitroUpgrades: []
+  handlingUpgrades: []
 --- !u!1 &342443860
 GameObject:
   m_ObjectHideFlags: 0
@@ -5546,10 +5594,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227, y: -379}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &415493582
 MonoBehaviour:
@@ -5884,6 +5932,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 462889840}
+  - component: {fileID: 462889841}
   m_Layer: 8
   m_Name: Upgrade
   m_TagString: Untagged
@@ -5910,6 +5959,22 @@ Transform:
   - {fileID: 1331116365}
   m_Father: {fileID: 1825588254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &462889841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462889839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6dd0d9c2e5c54045b25a4994fb6976b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineUpgrades: []
+  brakeUpgrades: []
+  nitroUpgrades: []
+  handlingUpgrades: []
 --- !u!1 &471785698
 GameObject:
   m_ObjectHideFlags: 0
@@ -6430,10 +6495,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -835}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &514558051
 MonoBehaviour:
@@ -6840,10 +6905,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -75}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &535778615
 MonoBehaviour:
@@ -7338,6 +7403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 604184050}
+  - component: {fileID: 604184051}
   m_Layer: 8
   m_Name: Spoilers
   m_TagString: Untagged
@@ -7376,6 +7442,19 @@ Transform:
   - {fileID: 5004251517246431165}
   m_Father: {fileID: 1695599316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &604184051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604184049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd886d561dcece42a0aa192752527a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spoilers: []
 --- !u!1 &608037288
 GameObject:
   m_ObjectHideFlags: 0
@@ -7469,6 +7548,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 615994533}
+  - component: {fileID: 615994534}
   m_Layer: 8
   m_Name: Spoilers
   m_TagString: Untagged
@@ -7507,6 +7587,19 @@ Transform:
   - {fileID: 1211114673}
   m_Father: {fileID: 671516312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &615994534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615994532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd886d561dcece42a0aa192752527a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spoilers: []
 --- !u!1 &618107524
 GameObject:
   m_ObjectHideFlags: 0
@@ -7790,10 +7883,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227, y: -683}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &626260253
 MonoBehaviour:
@@ -8029,7 +8122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &639531653
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8213,6 +8306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 643497003}
   - component: {fileID: 643497004}
+  - component: {fileID: 643497005}
   m_Layer: 0
   m_Name: Shop
   m_TagString: Untagged
@@ -8257,6 +8351,47 @@ MonoBehaviour:
   - {fileID: 705401732036479609}
   - {fileID: 6110938188470815549}
   _countCoinsText: {fileID: 1494822439}
+--- !u!114 &643497005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643497001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3e1c2550b4f11645821c3579a79f31e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _e46Car: {fileID: 6693996865242952006}
+  _e30Car: {fileID: 1083566891952900908}
+  _skylineCar: {fileID: 0}
+  _CTRCar: {fileID: 705401732036479611}
+  _coupeCar: {fileID: 6110938188470815552}
+  _redButton: {fileID: 2034850590}
+  _blueButton: {fileID: 535778615}
+  _greenButton: {fileID: 1750806873}
+  _yellowButton: {fileID: 1501501770}
+  _purpleButton: {fileID: 1591026389}
+  _blackButton: {fileID: 800573062}
+  _whiteButton: {fileID: 2079027126}
+  _cyanButton: {fileID: 415493582}
+  _grayButton: {fileID: 1590029013}
+  _pinkButton: {fileID: 163292789}
+  _orangeButton: {fileID: 857348652}
+  _brownButton: {fileID: 1189086237}
+  _goldButton: {fileID: 71990389}
+  _silverButton: {fileID: 626260253}
+  _bronzeButton: {fileID: 1950362086}
+  _salatButton: {fileID: 514558051}
+  _turquoiseButton: {fileID: 1051980141}
+  _crimsonButton: {fileID: 2078627069}
+  _limeButton: {fileID: 0}
+  _paintManagerE46: {fileID: 1923467351}
+  _paintManagerE30: {fileID: 309088993}
+  _paintManagerSkyline: {fileID: 0}
+  _paintManagerCTR: {fileID: 1366576822}
+  _paintManagerCoupe: {fileID: 1869642688}
 --- !u!1 &648589566
 GameObject:
   m_ObjectHideFlags: 0
@@ -10378,10 +10513,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379, y: -227}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &800573062
 MonoBehaviour:
@@ -11407,6 +11542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 855679308}
+  - component: {fileID: 855679309}
   m_Layer: 8
   m_Name: Spoilers
   m_TagString: Untagged
@@ -11445,6 +11581,19 @@ Transform:
   - {fileID: 1686113339}
   m_Father: {fileID: 1825588254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855679309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855679307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd886d561dcece42a0aa192752527a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spoilers: []
 --- !u!1 &857348650
 GameObject:
   m_ObjectHideFlags: 0
@@ -11478,10 +11627,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227, y: -531}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &857348652
 MonoBehaviour:
@@ -12864,6 +13013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 938088645}
+  - component: {fileID: 938088646}
   m_Layer: 8
   m_Name: Wheels
   m_TagString: Untagged
@@ -12890,6 +13040,19 @@ Transform:
   - {fileID: 207752382}
   m_Father: {fileID: 671516312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &938088646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938088644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5969929bdd61e42b67b260c73ab1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels: []
 --- !u!1 &948665655
 GameObject:
   m_ObjectHideFlags: 0
@@ -12909,7 +13072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &948665656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14013,10 +14176,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227, y: -835}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1051980141
 MonoBehaviour:
@@ -14401,8 +14564,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1588437876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.12087911}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15666,10 +15829,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379, y: -531}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1189086237
 MonoBehaviour:
@@ -16095,6 +16258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1230649283}
+  - component: {fileID: 1230649284}
   m_Layer: 8
   m_Name: Upgrade
   m_TagString: Untagged
@@ -16121,6 +16285,22 @@ Transform:
   - {fileID: 917118629}
   m_Father: {fileID: 1695599316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1230649284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230649282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6dd0d9c2e5c54045b25a4994fb6976b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineUpgrades: []
+  brakeUpgrades: []
+  nitroUpgrades: []
+  handlingUpgrades: []
 --- !u!1 &1233299682
 GameObject:
   m_ObjectHideFlags: 0
@@ -17103,6 +17283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1306958751}
+  - component: {fileID: 1306958752}
   m_Layer: 8
   m_Name: Wheels
   m_TagString: Untagged
@@ -17129,6 +17310,19 @@ Transform:
   - {fileID: 1004002501}
   m_Father: {fileID: 1825588254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1306958752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306958750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5969929bdd61e42b67b260c73ab1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels: []
 --- !u!1 &1319393991
 GameObject:
   m_ObjectHideFlags: 0
@@ -18133,6 +18327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1366576821}
+  - component: {fileID: 1366576822}
   m_Layer: 8
   m_Name: Paint
   m_TagString: Untagged
@@ -18166,6 +18361,19 @@ Transform:
   - {fileID: 1253276097}
   m_Father: {fileID: 1825588254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1366576822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366576820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171b76b99ef6d374090e1727018f8deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paints: []
 --- !u!1 &1367620251
 GameObject:
   m_ObjectHideFlags: 0
@@ -19673,9 +19881,9 @@ RectTransform:
   m_Father: {fileID: 639531653}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1469557581
 MonoBehaviour:
@@ -20504,10 +20712,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -227}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1501501770
 MonoBehaviour:
@@ -21654,10 +21862,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379, y: -379}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590029013
 MonoBehaviour:
@@ -21774,10 +21982,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227, y: -227}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1591026389
 MonoBehaviour:
@@ -23148,10 +23356,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 227, y: -75}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1750806873
 MonoBehaviour:
@@ -24218,6 +24426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1803360761}
+  - component: {fileID: 1803360762}
   m_Layer: 8
   m_Name: Spoilers
   m_TagString: Untagged
@@ -24256,6 +24465,19 @@ Transform:
   - {fileID: 871768811}
   m_Father: {fileID: 1379050249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1803360762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803360760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd886d561dcece42a0aa192752527a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spoilers: []
 --- !u!1 &1817071516
 GameObject:
   m_ObjectHideFlags: 0
@@ -24702,7 +24924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1835383100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25342,6 +25564,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1869642687}
+  - component: {fileID: 1869642688}
   m_Layer: 8
   m_Name: Paint
   m_TagString: Untagged
@@ -25373,6 +25596,19 @@ Transform:
   - {fileID: 163589507}
   m_Father: {fileID: 1379050249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1869642688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869642686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171b76b99ef6d374090e1727018f8deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paints: []
 --- !u!1 &1870936591
 GameObject:
   m_ObjectHideFlags: 0
@@ -26606,10 +26842,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379, y: -683}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1950362086
 MonoBehaviour:
@@ -27807,10 +28043,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379, y: -75}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2034850590
 MonoBehaviour:
@@ -28795,10 +29031,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379, y: -835}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2078627069
 MonoBehaviour:
@@ -28915,10 +29151,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 243090887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -379}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2079027126
 MonoBehaviour:
@@ -29886,6 +30122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2145194564}
+  - component: {fileID: 2145194565}
   m_Layer: 8
   m_Name: Wheels
   m_TagString: Untagged
@@ -29912,6 +30149,19 @@ Transform:
   - {fileID: 437398519}
   m_Father: {fileID: 1379050249}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2145194565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145194563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5969929bdd61e42b67b260c73ab1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheels: []
 --- !u!1 &30010150780009173
 GameObject:
   m_ObjectHideFlags: 0
@@ -31199,6 +31449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180644880677769411}
   - component: {fileID: 705401732036479610}
+  - component: {fileID: 705401732036479611}
   m_Layer: 8
   m_Name: CTR
   m_TagString: Untagged
@@ -31226,7 +31477,8 @@ MonoBehaviour:
   _paintManager: {fileID: 0}
   _wheelsManager: {fileID: 0}
   _upgradeManager: {fileID: 0}
-  _spoilerManager: {fileID: 0}
+  _spoilersManager: {fileID: 0}
+  _car: {fileID: 0}
   saveFileName: CTR
   autoLoadLoadout: 1
   loadout:
@@ -31237,6 +31489,22 @@ MonoBehaviour:
     brakeLevel: 0
     nitroLevel: 0
     handlingLevel: 0
+--- !u!114 &705401732036479611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705401732036479609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40647ddc460a89841b74258d370f7aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _paintManager: {fileID: 1366576822}
+  _wheelsManager: {fileID: 1306958752}
+  _upgradeManager: {fileID: 462889841}
+  _spoilerManager: {fileID: 855679309}
 --- !u!33 &728965590906984354
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -31912,6 +32180,7 @@ GameObject:
   m_Component:
   - component: {fileID: 306890138586861968}
   - component: {fileID: 1083566891952900907}
+  - component: {fileID: 1083566891952900908}
   m_Layer: 8
   m_Name: E30
   m_TagString: Untagged
@@ -31939,7 +32208,8 @@ MonoBehaviour:
   _paintManager: {fileID: 0}
   _wheelsManager: {fileID: 0}
   _upgradeManager: {fileID: 0}
-  _spoilerManager: {fileID: 0}
+  _spoilersManager: {fileID: 0}
+  _car: {fileID: 0}
   saveFileName: E30
   autoLoadLoadout: 1
   loadout:
@@ -31950,6 +32220,22 @@ MonoBehaviour:
     brakeLevel: 0
     nitroLevel: 0
     handlingLevel: 0
+--- !u!114 &1083566891952900908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083566891952900906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40647ddc460a89841b74258d370f7aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _paintManager: {fileID: 309088993}
+  _wheelsManager: {fileID: 938088646}
+  _upgradeManager: {fileID: 335101432}
+  _spoilerManager: {fileID: 615994534}
 --- !u!1 &1090368191178562349
 GameObject:
   m_ObjectHideFlags: 0
@@ -35295,7 +35581,8 @@ MonoBehaviour:
   _paintManager: {fileID: 0}
   _wheelsManager: {fileID: 0}
   _upgradeManager: {fileID: 0}
-  _spoilerManager: {fileID: 0}
+  _spoilersManager: {fileID: 0}
+  _car: {fileID: 0}
   saveFileName: Skyline
   autoLoadLoadout: 1
   loadout:
@@ -40471,6 +40758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6110938188470785821}
   - component: {fileID: 6110938188470815550}
+  - component: {fileID: 6110938188470815552}
   m_Layer: 8
   m_Name: Coupe
   m_TagString: Untagged
@@ -40498,7 +40786,8 @@ MonoBehaviour:
   _paintManager: {fileID: 0}
   _wheelsManager: {fileID: 0}
   _upgradeManager: {fileID: 0}
-  _spoilerManager: {fileID: 0}
+  _spoilersManager: {fileID: 0}
+  _car: {fileID: 0}
   saveFileName: Coupe
   autoLoadLoadout: 1
   loadout:
@@ -40527,6 +40816,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6110938188470815552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110938188470815549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40647ddc460a89841b74258d370f7aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _paintManager: {fileID: 1869642688}
+  _wheelsManager: {fileID: 2145194565}
+  _upgradeManager: {fileID: 58499920}
+  _spoilerManager: {fileID: 1803360762}
 --- !u!4 &6126467003705698089
 Transform:
   m_ObjectHideFlags: 0
@@ -40692,6 +40997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6693996865242952004}
   - component: {fileID: 6693996865242952005}
+  - component: {fileID: 6693996865242952006}
   m_Layer: 8
   m_Name: E46_New
   m_TagString: Untagged
@@ -41404,7 +41710,8 @@ MonoBehaviour:
   _paintManager: {fileID: 1923467351}
   _wheelsManager: {fileID: 0}
   _upgradeManager: {fileID: 0}
-  _spoilerManager: {fileID: 0}
+  _spoilersManager: {fileID: 0}
+  _car: {fileID: 0}
   saveFileName: E46_New
   autoLoadLoadout: 1
   loadout:
@@ -41415,6 +41722,22 @@ MonoBehaviour:
     brakeLevel: 0
     nitroLevel: 0
     handlingLevel: 0
+--- !u!114 &6693996865242952006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6317998332477320190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40647ddc460a89841b74258d370f7aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _paintManager: {fileID: 1923467351}
+  _wheelsManager: {fileID: 424795758}
+  _upgradeManager: {fileID: 1230649284}
+  _spoilerManager: {fileID: 604184051}
 --- !u!33 &6698888885461426316
 MeshFilter:
   m_ObjectHideFlags: 0
