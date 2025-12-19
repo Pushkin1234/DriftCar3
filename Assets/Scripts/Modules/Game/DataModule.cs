@@ -5,7 +5,7 @@ using UnityEngine;
 public class DataModule : BaseGameModule, IPersistentModule
 {
     public override string ModuleName => "Data";
-    
+
     [System.Serializable]
     public class GameData
     {
@@ -14,11 +14,11 @@ public class DataModule : BaseGameModule, IPersistentModule
         public int appliedCarIndex = 0;
         public bool muteMusic = false;
         public List<bool> isBuyShop = new List<bool>() {true, false, false, false, false};
-        
+
         // Кастомизация для каждой машины (индекс соответствует индексу машины в магазине)
         public string customizationDataJson = ""; // JSON с Dictionary<int, CarCustomizationData>
     }
-    
+
     [System.Serializable]
     public class CarCustomizationData
     {
@@ -41,12 +41,12 @@ public class DataModule : BaseGameModule, IPersistentModule
         public string unlockedSpoilersJson = "";
         public string unlockedWheelsJson = "";
     }
-    
+
     private GameData _data = new GameData();
     private const string SAVE_KEY = "GameData";
-    
+
     public GameData Data => _data;
-    
+
     public override void Initialize()
     {
         LoadData();
@@ -55,16 +55,16 @@ public class DataModule : BaseGameModule, IPersistentModule
 
     public override void Update()
     {
-        ResetData();
+        // Update method - можно использовать для периодических проверок при необходимости
     }
-    
+
     public void SaveData()
     {
         var json = JsonUtility.ToJson(_data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
     }
-    
+
     private void LoadData()
     {
         if (PlayerPrefs.HasKey(SAVE_KEY))
@@ -73,25 +73,25 @@ public class DataModule : BaseGameModule, IPersistentModule
             _data = JsonUtility.FromJson<GameData>(json);
         }
     }
-    
+
     /// <summary>
     /// Сбросить все сохранения игры к значениям по умолчанию
     /// </summary>
     public void ResetData()
     {
         Debug.LogWarning("[DataModule] Сброс всех сохранений!");
-        
+
         // Удаляем все сохранения из PlayerPrefs
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        
+
         // Создаем новые данные по умолчанию
         _data = new GameData();
-        
-        
+
+
         // Сохраняем новые данные
         SaveData();
-        
+
         Debug.Log("[DataModule] ✅ Все сохранения успешно сброшены!");
     }
 }
